@@ -191,8 +191,36 @@ gerarGenePele([Alelo1,Alelo2], [Alelo3,Alelo4],[[Alelo1, W],[Alelo3, X],[Alelo2,
 	aleatorio2(Num3), idPeleA(Num3, Y),
 	aleatorio2(Num4), idPeleB(Num4, Z).
 
+%Arvore genealogica
 
-%teste
+pai_mae([[S1,S2],[C1,C2],[B1,B2,G1,G2],[A1,A2,P1,P2]],[[PS, PC, OlhoP, PeleP],[MS,MC,OlhoM,PeleM]]):-
+	gerarGeneSangue([S1,S2], [PS, MS]),
+	gerarGeneCalvice([C1,C2], [PC, MC]),
+	gerarGeneOlho([B1,B2],[G1,G2],[O1,O2,O3,O4]),
+	concatenarLista(O1,O2, OlhoP),
+	concatenarLista(O3,O4, OlhoM),
+	gerarGenePele([A1,A2],[P1,P2],[Pe1,Pe2,Pe3,Pe4]),
+	concatenarLista(Pe1,Pe2, PeleP),
+	concatenarLista(Pe3,Pe4, PeleM).
+
+arvore(Nivel, Individuo, Arvore):- Nivel = 1, pai_mae(Individuo, Arvore).
+arvore(Nivel, Individuo, [Individuo,Arvore]):-
+	Cont is  Nivel - 1,
+	arvore(Cont, Individuo, [Individuo1,Individuo2]),
+	arvore(Cont, Individuo1, Arvore1),
+	arvore(Cont, Individuo2, Arvore2),
+	concatenarLista([Individuo1,Individuo2],Arvore1, Arvore3),
+	concatenarLista(Arvore3, Arvore2, Arvore).
+
+/*arvore(Inicio, Final, Individuo, Arvore):-
+	pai_mae(Individuo, [Individuo1, Individuo2]),
+	Num is Inicio + 1,
+	arvore(Num, Final, Individuo1, Arvore1),
+	arvore(Num, Final, Individuo2, Arvore2),
+	concatenarLista(Arvore1, Arvore2, Arvore).*/
+
+
+%teste ([Alelo1,Alelo2], [[Alelo1, X],[Alelo2, Y]])
 teste(X):-
 	write('Digite algo:'), read(X).
 
