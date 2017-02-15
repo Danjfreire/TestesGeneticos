@@ -203,14 +203,33 @@ pai_mae([[S1,S2],[C1,C2],[B1,B2,G1,G2],[A1,A2,P1,P2]],[[PS, PC, OlhoP, PeleP],[M
 	concatenarLista(Pe1,Pe2, PeleP),
 	concatenarLista(Pe3,Pe4, PeleM).
 
-arvore(Nivel, Individuo, Arvore):- Nivel = 1, pai_mae(Individuo, Arvore).
+gerarPais([Individuo], Pais):- pai_mae(Individuo, Pais).
+gerarPais([Individuo|Individuos], Pais):-
+	gerarPais(Individuos, PM2),
+	pai_mae(Individuo, PM1),
+	concatenarLista(PM1,PM2, Pais).
+
+preArvore(Nivel, Filhos, Arvore):- tamanhoLista(Filhos, X),  Y is 2^(Nivel - 1),
+	Y = X, gerarPais(Filhos, Arvore).
+preArvore(Nivel, Pessoa, Arvore):-
+	gerarPais(Pessoa, Pais),
+	preArvore(Nivel, Pais, SubArvore),
+	concatenarLista(Pais, SubArvore, Arvore).
+
+arvoreGenealogica(Pessoa, Arvore):- preArvore(2, [Pessoa], SubArvore), concatenarLista([Pessoa],SubArvore, Arvore1),
+	reverse(Arvore1,Arvore).
+
+% arvoreGenealogica([['IA','IA'],['C','c'],['BA','BA','GA','GA'],['A','A','b','b']],[A,B,C,D,E,F,G]),write(A),write(B),write(C),write%(D),write('\n
+% '),write(E),write(' '),write(F),write('\n '),write(G),write('\n\n\n').
+
+/*arvore(Nivel, Individuo, Arvore):- Nivel = 1, pai_mae(Individuo, Arvore).
 arvore(Nivel, Individuo, [Individuo,Arvore]):-
 	Cont is  Nivel - 1,
 	arvore(Cont, Individuo, [Individuo1,Individuo2]),
 	arvore(Cont, Individuo1, Arvore1),
 	arvore(Cont, Individuo2, Arvore2),
 	concatenarLista([Individuo1,Individuo2],Arvore1, Arvore3),
-	concatenarLista(Arvore3, Arvore2, Arvore).
+	concatenarLista(Arvore3, Arvore2, Arvore).*/
 
 /*arvore(Inicio, Final, Individuo, Arvore):-
 	pai_mae(Individuo, [Individuo1, Individuo2]),
