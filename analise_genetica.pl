@@ -16,12 +16,15 @@ idSangue(2, 'IB').
 idSangue(3, 'i').
 
 %calvice(geneP, geneM, sexo, fenótipo)
-calvice('C', 'C', _, 'sim').
-calvice('C', 'c', 'masculino', 'sim').
-calvice('c', 'C', 'masculino', 'sim').
-calvice('C', 'c', 'feminino', 'nao').
-calvice('c', 'C', 'feminino', 'nao').
-calvice('c', 'c', _, 'nao').
+calvice('C', 'C', 'masculino', 'calvo').
+calvice('C', 'C', 'feminino', 'calva').
+calvice('C', 'c', 'masculino', 'calvo').
+calvice('c', 'C', 'masculino', 'calvo').
+calvice('C', 'c', 'feminino', 'não calva').
+calvice('c', 'C', 'feminino', 'não calva').
+calvice('c', 'c', 'masculino', 'não calvo').
+calvice('c', 'c', 'feminino', 'não calva').
+
 
 idCalvice(1, 'c').
 idCalvice(2, 'C').
@@ -110,6 +113,8 @@ aleatorio2(Num):-
 	random(X), Y is X*10000, round(Y, Z), Num is (Z mod 2)+1.
 aleatorio3(Num):-
 	random(X), Y is X*10000, round(Y, Z), Num is (Z mod 3)+1.
+aleatorio4(Num):-
+	random(X), Y is X*10000, round(Y, Z), Num is (Z mod 4)+1.
 
 %Tipo sangue
 
@@ -117,8 +122,8 @@ listaSangue([[X,Y]], [Fenotipo]):- tipoSanguineo(X, Y, Fenotipo).
 listaSangue([[X,Y]|Lista1], [Fenotipo|Lista2]):-
 	listaSangue(Lista1, Lista2), tipoSanguineo(X, Y, Fenotipo).
 
-retornaFenotipoSanguineo(GeneP, GeneM, Lista):-
-	pareamentoGenes(GeneP, GeneM, Lista2), listaSangue(Lista2, Lista).
+retornaFenotipoSanguineo(GeneP, GeneM, Tipos):-
+	pareamentoGenes(GeneP, GeneM, Lista2), listaSangue(Lista2, Tipos).
 
 probabilidadeSanguineo(GeneP, GeneM, Fenotipo, Percentual):-
 	retornaFenotipoSanguineo(GeneP, GeneM, Lista), tamanhoLista(Lista, Tamanho1),
@@ -127,6 +132,7 @@ probabilidadeSanguineo(GeneP, GeneM, Fenotipo, Percentual):-
 gerarGeneSangue([Alelo1,Alelo2], [[Alelo1, X],[Alelo2, Y]]):-
 	aleatorio3(Num1), idSangue(Num1, X),
 	aleatorio3(Num2), idSangue(Num2, Y).
+
 
 %Tipo calvice
 
@@ -216,32 +222,105 @@ preArvore(Nivel, Pessoa, Arvore):-
 	preArvore(Nivel, Pais, SubArvore),
 	concatenarLista(Pais, SubArvore, Arvore).
 
-arvoreGenealogica(Pessoa, Arvore):- preArvore(2, [Pessoa], SubArvore), concatenarLista([Pessoa],SubArvore, Arvore1),
+arvoreGenealogica(Pessoa, Arvore):- preArvore(4, [Pessoa], SubArvore), concatenarLista([Pessoa],SubArvore, Arvore1),
 	reverse(Arvore1,Arvore).
 
-% arvoreGenealogica([['IA','IA'],['C','c'],['BA','BA','GA','GA'],['A','A','b','b']],[A,B,C,D,E,F,G]),write(A),write(B),write(C),write%(D),write('\n
-% '),write(E),write(' '),write(F),write('\n '),write(G),write('\n\n\n').
+%Descendentes até um nivel dado
 
-/*arvore(Nivel, Individuo, Arvore):- Nivel = 1, pai_mae(Individuo, Arvore).
-arvore(Nivel, Individuo, [Individuo,Arvore]):-
-	Cont is  Nivel - 1,
-	arvore(Cont, Individuo, [Individuo1,Individuo2]),
-	arvore(Cont, Individuo1, Arvore1),
-	arvore(Cont, Individuo2, Arvore2),
-	concatenarLista([Individuo1,Individuo2],Arvore1, Arvore3),
-	concatenarLista(Arvore3, Arvore2, Arvore).*/
+geneFilho([Alelo1,_], [Alelo2, _], [Alelo1,Alelo2], Z):- Z = 1.
+geneFilho([Alelo1,_], [_, Alelo2], [Alelo1,Alelo2], Z):- Z = 2.
+geneFilho([_,Alelo1], [Alelo2, _], [Alelo1,Alelo2], Z):- Z = 3.
+geneFilho([_,Alelo1], [_, Alelo2], [Alelo1,Alelo2], Z):- Z = 4.
 
-/*arvore(Inicio, Final, Individuo, Arvore):-
-	pai_mae(Individuo, [Individuo1, Individuo2]),
-	Num is Inicio + 1,
-	arvore(Num, Final, Individuo1, Arvore1),
-	arvore(Num, Final, Individuo2, Arvore2),
-	concatenarLista(Arvore1, Arvore2, Arvore).*/
+gerarFilho([[PS1, PS2],[PC1,PC2, 'masculino'],[PO1,PO2,PO3,PO4],[PL1,PL2,PL3,PL4]],
+	   [[MS1, MS2],[MC1,MC2, 'feminino'],[MO1,MO2,MO3,MO4],[ML1,ML2,ML3,ML4]],
+	   [[Sangue, [CA, CB, 'masculino'], [O1,O2,O3,O4], [P1,P2,P3,P4]],
+	   [[[PS1, PS2],[PC1,PC2, 'masculino'],[PO1,PO2,PO3,PO4],[PL1,PL2,PL3,PL4]],
+	   [[MS1, MS2],[MC1,MC2, 'feminino'],[MO1,MO2,MO3,MO4],[ML1,ML2,ML3,ML4]]]] ):-
+	aleatorio4(A), geneFilho([PS1, PS2],[MS1, MS2], Sangue, A),
+	aleatorio4(B), geneFilho([PC1,PC2],[MC1,MC2], [CA,CB], B),
+	aleatorio4(C), geneFilho([PO1,PO2],[MO1,MO2], [O1,O2], C),
+	aleatorio4(D), geneFilho([PO3,PO4],[MO3,MO4], [O3,O4], D),
+	aleatorio4(E), geneFilho([PL1,PL2],[ML1,ML2], [P1,P2], E),
+	aleatorio4(F), geneFilho([PL3,PL4],[ML3,ML4], [P3,P4], F).
 
+gerarFilha([[PS1, PS2],[PC1,PC2, 'masculino'],[PO1,PO2,PO3,PO4],[PL1,PL2,PL3,PL4]],
+	   [[MS1, MS2],[MC1,MC2, 'feminino'],[MO1,MO2,MO3,MO4],[ML1,ML2,ML3,ML4]],
+	   [[Sangue, [CA, CB, 'feminino'], [O1,O2,O3,O4], [P1,P2,P3,P4]],
+	   [[[PS1, PS2],[PC1,PC2, 'masculino'],[PO1,PO2,PO3,PO4],[PL1,PL2,PL3,PL4]],
+	   [[MS1, MS2],[MC1,MC2, 'feminino'],[MO1,MO2,MO3,MO4],[ML1,ML2,ML3,ML4]]]] ):-
+	aleatorio4(A), geneFilho([PS1, PS2],[MS1, MS2], Sangue, A),
+	aleatorio4(B), geneFilho([PC1,PC2],[MC1,MC2], [CA,CB], B),
+	aleatorio4(C), geneFilho([PO1,PO2],[MO1,MO2], [O1,O2], C),
+	aleatorio4(D), geneFilho([PO3,PO4],[MO3,MO4], [O3,O4], D),
+	aleatorio4(E), geneFilho([PL1,PL2],[ML1,ML2], [P1,P2], E),
+	aleatorio4(F), geneFilho([PL3,PL4],[ML3,ML4], [P3,P4], F).
 
-%teste ([Alelo1,Alelo2], [[Alelo1, X],[Alelo2, Y]])
+listaFilhos(Pai, Mae, Quantidade, [Filho]):- Quantidade = 1, gerarFilho(Pai, Mae, Filho).
+listaFilhos(Pai, Mae, Quantidade, [Filho|Filhos]):-
+	Resto is Quantidade - 1, listaFilhos(Pai, Mae, Resto, Filhos),
+	gerarFilho(Pai, Mae, Filho).
+
+listaFilhas(Pai, Mae, Quantidade, [Filha]):- Quantidade = 1, gerarFilha(Pai, Mae, Filha).
+listaFilhas(Pai, Mae, Quantidade, [Filha|Filhas]):-
+	Resto is Quantidade - 1, listaFilhas(Pai, Mae, Resto, Filhas),
+	gerarFilha(Pai, Mae, Filha).
+
+tiraUlt([_],[]).
+tiraUlt([Cabeca|Cauda], [Cabeca|Lista]):-
+	tiraUlt(Cauda, Lista).
+
+removerLista(Lista1, 1, Lista2):- tiraUlt(Lista1, Lista2).
+removerLista([_|Lista], Num1, Lista):- tamanhoLista([_|Lista], Num2), Num1 = Num2.
+removerLista([Head1|Cauda1], Indice, [Head1|Cauda2]):-
+	removerLista(Cauda1, Indice, Cauda2).
+
+retornaUlt([Ultimo], Ultimo).
+retornaUlt([_|Cauda], Ultimo):-
+	retornaUlt(Cauda, Ultimo).
+
+pegarLista(Lista, 1, Elemento):- retornaUlt(Lista, Elemento).
+pegarLista([Cabeca|Cauda], Indice, Cabeca):-
+	tamanhoLista([Cabeca|Cauda], X), Indice = X.
+pegarLista([_|Cauda], Indice, Elemento):-
+	pegarLista(Cauda, Indice, Elemento).
+
+formarCasais([], _, []).
+formarCasais(_, [], []).
+formarCasais(Homens, Mulheres, [[Homem, Mulher]|Casais]):-
+	tamanhoLista(Homens, V), random(W), X is W * 100000,
+	round(X, Y), Z is (Y mod V) + 1,
+	tamanhoLista(Mulheres, A), random(B), C is B * 100000,
+	round(C, D), E is (D mod A) + 1,
+	pegarLista(Homens, Z, Homem),
+	removerLista(Homens, Z, Homens1),
+	pegarLista(Mulheres, E, Mulher),
+	removerLista(Mulheres, E, Mulheres1),
+	formarCasais(Homens1, Mulheres1, Casais),!.
+
+filhosCasais([[[Homem,_],[Mulher,_]]],[Filhos,Filhas]):-
+	aleatorio2(X), listaFilhos(Homem, Mulher, X, Filhos),
+	listaFilhas(Homem, Mulher, X, Filhas).
+filhosCasais([[[Homem,_], [Mulher,_]]|Casais], [Filhos, Filhas]):-
+	aleatorio2(X), listaFilhos(Homem, Mulher, X, Filhos1),
+        listaFilhas(Homem, Mulher, X, Filhas1),
+	filhosCasais(Casais, [Filhos2, Filhas2]),
+	concatenarLista(Filhos1, Filhos2, Filhos),
+	concatenarLista(Filhas1, Filhas2, Filhas).
+
+preDescendentes(Casais, [Descendentes], 1):- filhosCasais(Casais, Descendentes).
+preDescendentes(Casal, [Casais|Descendentes], Nivel):-
+	filhosCasais(Casal,[Filhos,Filhas]),
+	formarCasais(Filhos, Filhas, Casais),
+	Resto is Nivel - 1,
+	preDescendentes(Casais, Descendentes, Resto).
+
+descendentes(Homem, Mulher, Descendentes, Nivel):-
+	preDescendentes([[[Homem,_], [Mulher,_]]], Descendentes, Nivel).
+
+/*
 teste(X):-
-	write('Digite algo:'), read(X).
+	write('Digite algo:'), read(X).*/
 
 
 
