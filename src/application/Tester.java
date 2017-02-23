@@ -6,9 +6,9 @@ import com.ugos.jiprolog.engine.*;
 public class Tester {
 	public static void main (String [] args){
 		JIPTerm busca = null;
-		JIPEngine pg = new JIPEngine();
+		JIPEngine pg = new JIPEngine(); //gera vários fails
 		try{
-			pg.consultFile("arquivos/Testes.pl");			//CAMINHO DO ARQUIVO
+			pg.consultFile("arquivos/testes.pl");			//CAMINHO DO ARQUIVO
 			busca = pg.getTermParser().parseTerm("lista(X).");	//CONSULTA
 		} catch(JIPSyntaxErrorException ex){
 			ex.printStackTrace();
@@ -22,7 +22,7 @@ public class Tester {
 		 while (pesquisa.hasMoreChoicePoints())
 	        {
 	            resposta = pesquisa.nextSolution();		//isso aqui retorna lista com formato estranho
-	            //System.out.println(resposta);
+	            System.out.println(resposta);
 
 	            JIPVariable[] vars = resposta.getVariables();
 	            for (JIPVariable var : vars) {
