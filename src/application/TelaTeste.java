@@ -4,30 +4,38 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import com.ugos.jiprolog.engine.JIPEngine;
-import com.ugos.jiprolog.engine.JIPQuery;
-import com.ugos.jiprolog.engine.JIPSyntaxErrorException;
-import com.ugos.jiprolog.engine.JIPTerm;
-import com.ugos.jiprolog.engine.JIPVariable;
-
 import javax.swing.JButton;
 import javax.swing.JTextPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ButtonGroup;
 import javax.swing.DropMode;
+import javax.swing.ImageIcon;
 import javax.swing.JRadioButton;
 import javax.swing.JLabel;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JTextField;
+import javax.swing.JMenuItem;
+import java.awt.Color;
+import javax.swing.border.TitledBorder;
+import javax.swing.UIManager;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.Font;
 
 public class TelaTeste extends JFrame {
 
 	private JPanel contentPane;
-	JIPEngine pg = new JIPEngine();
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JPanel panel;
 
 	/**
 	 * Launch the application.
@@ -49,153 +57,128 @@ public class TelaTeste extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaTeste() {
+		setResizable(false);
+		setTitle("Projeto G\u00EAneses");
 
-		pg.consultFile("analise_genetica.pl");
+		
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 500);
+		setBounds(100, 100, 800, 600);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu mnPessoa = new JMenu("Pessoa");
+		menuBar.add(mnPessoa);
+		
+		JMenuItem mntmCadastrar = new JMenuItem("Cadastrar");
+		mntmCadastrar.setBackground(Color.WHITE);
+		mnPessoa.add(mntmCadastrar);
+		
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(22, 11, 533, 439);
+		scrollPane.setBounds(10, 165, 554, 374);
 		contentPane.add(scrollPane);
 
 		JTextPane areaResposta = new JTextPane();
 		scrollPane.setViewportView(areaResposta);
-
-		JTextArea areaBusca = new JTextArea();
-		areaBusca.setLineWrap(true);
-		areaBusca.setBounds(587, 11, 171, 81);
-		contentPane.add(areaBusca);
-
-
-		JButton btnArvore = new JButton("Arvore");
-		btnArvore.setBounds(609, 137, 127, 23);
-		contentPane.add(btnArvore);
-		btnArvore.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-
-				String busca = "arvoreGenealogica("+areaBusca.getText()+").";
-				areaResposta.setText(consultar(busca));
-			}	
-		});
-
-		JButton btnDescendentes = new JButton("Descendentes");
-		btnDescendentes.setBounds(609, 171, 127, 23);
-		contentPane.add(btnDescendentes);
-		btnDescendentes.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-
-				String busca = "descendentes("+areaBusca.getText()+").";
-				areaResposta.setText(consultar(busca));
-			}	
-		});
-
-		JButton btnCompatibilidade = new JButton("Compatibilidade");
-		btnCompatibilidade.setBounds(609, 103, 127, 23);
-		contentPane.add(btnCompatibilidade);
-		btnCompatibilidade.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-
-				String busca = ""; //falta
-				areaResposta.setText(consultar(busca));
-			}			
-		});
-
-	
-		JButton btnNovoindividuo = new JButton("Novo individuo");
-		btnNovoindividuo.setBounds(609, 403, 149, 32);
-		contentPane.add(btnNovoindividuo);
-		btnNovoindividuo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				TelaIndividuo tela = new TelaIndividuo();
-				tela.setVisible(true);
-				
-			}
-		});
 		
 		ButtonGroup grupo = new ButtonGroup();
-		JRadioButton rdbtnSangue = new JRadioButton("Sangue");
-		rdbtnSangue.setBounds(609, 265, 109, 23);
-		contentPane.add(rdbtnSangue);
-		grupo.add(rdbtnSangue);
 		
-		JRadioButton rdbtnPele = new JRadioButton("Pele\r\n");
-		rdbtnPele.setBounds(609, 291, 109, 23);
-		contentPane.add(rdbtnPele);
-		grupo.add(rdbtnPele);
-		
+		panel = new JPanel();
+		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Consulta", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(199, 21, 133)));
+		panel.setBackground(Color.WHITE);
+		panel.setBounds(574, 165, 210, 374);
+		contentPane.add(panel);
+		panel.setLayout(null);
+										
+		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(10, 182, 190, 126);
+		panel.add(panel_1);
+		panel_1.setBackground(Color.WHITE);
+		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Selecionar", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(199, 21, 133)));
+		panel_1.setLayout(null);
+										
 		JRadioButton rdbtnCalvice = new JRadioButton("Calvice");
-		rdbtnCalvice.setBounds(609, 239, 109, 23);
-		contentPane.add(rdbtnCalvice);
+		rdbtnCalvice.setBackground(Color.WHITE);
+		rdbtnCalvice.setBounds(6, 18, 74, 23);
+		panel_1.add(rdbtnCalvice);
 		grupo.add(rdbtnCalvice);
-		
+		JRadioButton rdbtnSangue = new JRadioButton("Sangue");
+		rdbtnSangue.setBackground(Color.WHITE);
+		rdbtnSangue.setBounds(6, 44, 74, 23);
+		panel_1.add(rdbtnSangue);
+		grupo.add(rdbtnSangue);
+								
+		JRadioButton rdbtnPele = new JRadioButton("Pele\r\n");
+		rdbtnPele.setBackground(Color.WHITE);
+		rdbtnPele.setBounds(6, 70, 74, 23);
+		panel_1.add(rdbtnPele);
+		grupo.add(rdbtnPele);
+									
 		JRadioButton rdbtnOlhos = new JRadioButton("Olhos\r\n");
-		rdbtnOlhos.setBounds(609, 317, 109, 23);
-		contentPane.add(rdbtnOlhos);
+		rdbtnOlhos.setBackground(Color.WHITE);
+		rdbtnOlhos.setBounds(6, 96, 74, 23);
+		panel_1.add(rdbtnOlhos);
 		grupo.add(rdbtnOlhos);
-		
-		JLabel lblProbabilidade = new JLabel("Probabilidade");
-		lblProbabilidade.setBounds(609, 205, 94, 27);
-		contentPane.add(lblProbabilidade);
-		
-		JButton btnProbabilidade = new JButton("Probabilidade");
-		btnProbabilidade.setBounds(609, 347, 127, 23);
-		contentPane.add(btnProbabilidade);
-		btnProbabilidade.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				String busca = "";
-				if(rdbtnCalvice.isSelected())
-					busca = "probabilidadeCalvice("+areaBusca.getText()+")."; //escrever a proposição a ser chamada usando o texto do areaBusca 
-				if(rdbtnOlhos.isSelected())
-					busca = "probabilidadeOlho("+areaBusca.getText()+").";
-				if(rdbtnPele.isSelected())
-					busca = "probabilidadePele("+areaBusca.getText()+").";
-				if(rdbtnSangue.isSelected())
-					busca = "probabilidadeSanguineo("+areaBusca.getText()+").";
-				areaResposta.setText(consultar(busca));
-			}	
-		});
-		
-
-
+									
+		JPanel panel_2 = new JPanel();
+		panel_2.setBorder(new TitledBorder(null, "Nomes", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(199, 21, 133)));
+		panel_2.setBackground(Color.WHITE);
+		panel_2.setBounds(10, 57, 190, 114);
+		panel.add(panel_2);
+		panel_2.setLayout(null);
+									
+		textField_2 = new JTextField();
+		textField_2.setBounds(56, 52, 124, 20);
+		panel_2.add(textField_2);
+		textField_2.setColumns(10);
+									
+		textField_1 = new JTextField();
+		textField_1.setBounds(56, 21, 124, 20);
+		panel_2.add(textField_1);
+		textField_1.setColumns(10);
+								
+		textField = new JTextField();
+		textField.setBounds(56, 83, 124, 20);
+		panel_2.add(textField);
+		textField.setColumns(10);
+									
+		JLabel lblIndividuo = new JLabel("Pessoa:");
+		lblIndividuo.setBounds(10, 24, 68, 14);
+		panel_2.add(lblIndividuo);
+									
+		JLabel lblMe = new JLabel("M\u00E3e:");
+		lblMe.setBounds(10, 55, 46, 14);
+		panel_2.add(lblMe);
+									
+		JLabel lblPai = new JLabel("Pai:");
+		lblPai.setBounds(10, 86, 46, 14);
+		panel_2.add(lblPai);
+										
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBackground(Color.WHITE);
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"\u00C1rvore", "Descendentes", "Compatibilidade", "Probabilidade"}));
+		comboBox.setBounds(10, 26, 190, 20);
+		panel.add(comboBox);
+										
+		JButton btnExecutar = new JButton("Executar");
+		btnExecutar.setBackground(new Color(199, 21, 133));
+		btnExecutar.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnExecutar.setBounds(10, 319, 190, 44);
+		panel.add(btnExecutar);
+										
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(TelaTeste.class.getResource("/imagens/seqcore_slider_img_resized.png")));
+		lblNewLabel.setBounds(10, 11, 774, 143);
+		contentPane.add(lblNewLabel);
+										
 	}
 
-	public String consultar(String consulta){
-		JIPTerm busca = pg.getTermParser().parseTerm(consulta);	//CONSULTA
-		StringBuffer result = new StringBuffer();
-
-		try{
-			JIPQuery pesquisa = pg.openSynchronousQuery(busca); //iniciar busca
-			JIPTerm resposta;
-
-			//fazer loop enquanto houver outra resposta
-			while (pesquisa.hasMoreChoicePoints())
-			{
-				resposta = pesquisa.nextSolution();		//isso aqui retorna lista com formato estranho
-				//System.out.println(resposta);
-
-				JIPVariable[] vars = null;
-				if(resposta!= null){
-					vars = resposta.getVariables();
-
-					vars = resposta.getVariables();
-					for (JIPVariable var : vars) {
-						if (!var.isAnonymous()) {		//O RESULTADO DA PESQUISA ESTÁ AQUI!
-							result.append(var.getName() + " = " + var.toString(pg)+"\n");
-						}
-					}
-				}
-				else
-					System.out.println("NULO");
-			}
-
-		} catch(JIPSyntaxErrorException ex){
-			ex.printStackTrace();
-		} 	
-
-		return result.toString(); 
-	}}
+	
+}

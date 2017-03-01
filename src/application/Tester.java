@@ -1,44 +1,34 @@
 package application;
-import java.io.IOException;
 
-import com.ugos.jiprolog.engine.*;
+import java.io.File;
+import org.jpl7.Atom;
+import org.jpl7.Query;
+import org.jpl7.Term;
 
 public class Tester {
 	public static void main (String [] args){
-		JIPTerm busca = null;
-		JIPEngine pg = new JIPEngine(); //gera vários fails
-		try{
-			pg.consultFile("arquivos/testes.pl");			//CAMINHO DO ARQUIVO
-			busca = pg.getTermParser().parseTerm("lista(X).");	//CONSULTA
-		} catch(JIPSyntaxErrorException ex){
-			ex.printStackTrace();
-		} 
 		
-		//iniciar busca
-		JIPQuery pesquisa = pg.openSynchronousQuery(busca);
-		JIPTerm resposta;
+		//Configura o caminho do arquivo
+		File temp = new File("");
+		String tempCaminho = temp.getAbsolutePath();
+		String caminho = tempCaminho.replace("\\", "\\\\");
+		String caminhoPL = caminho + "\\\\analise_genetica";
+		//String caminhoTXT = caminho + "\\\\pessoas.txt";
 		
-		//fazer loop enquanto houver outra resposta
-		 while (pesquisa.hasMoreChoicePoints())
-	        {
-	            resposta = pesquisa.nextSolution();		//isso aqui retorna lista com formato estranho
-	            System.out.println(resposta);
-
-	            JIPVariable[] vars = resposta.getVariables();
-	            for (JIPVariable var : vars) {
-	                if (!var.isAnonymous()) {		//O RESULTADO DA PESQUISA ESTÁ AQUI!
-	                    System.out.print(var.getName() + " = " + var.toString(pg) + " ");
-	                    System.out.println();
-	                }
-	            }
-	        }
+		//ver caminho
+		System.out.println(caminhoPL);
 		
+		//montagem da chamada: consult(caminhoDoArquivo)
+		Query q1 = new Query( "consult", new Term[] {new Atom(caminhoPL)} );
 		
+		//verirficacao da resposta
+		System.out.println( "consult " + (q1.hasSolution() ? "succeeded" : "failed"));
 		
+		//teste lista
+		String c = "teste(X)";
+		System.out.println(Query.oneSolution(c).get("X"));
 		
-		
-		
-		
-		
+		TelaIndividuo t = new TelaIndividuo();
+		t.setVisible(true);
 	}
 }
