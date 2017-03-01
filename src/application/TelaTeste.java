@@ -29,12 +29,16 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Font;
 
+import org.jpl7.Atom;
+import org.jpl7.Query;
+import org.jpl7.Term;
+
 public class TelaTeste extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField tfPai;
+	private JTextField tfPessoa;
+	private JTextField tfMae;
 	private JPanel panel;
 
 	/**
@@ -74,6 +78,12 @@ public class TelaTeste extends JFrame {
 		JMenuItem mntmCadastrar = new JMenuItem("Cadastrar");
 		mntmCadastrar.setBackground(Color.WHITE);
 		mnPessoa.add(mntmCadastrar);
+		mntmCadastrar.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				TelaIndividuo tela = new TelaIndividuo();
+				tela.setVisible(true);
+			}
+		});
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
@@ -134,20 +144,20 @@ public class TelaTeste extends JFrame {
 		panel.add(panel_2);
 		panel_2.setLayout(null);
 									
-		textField_2 = new JTextField();
-		textField_2.setBounds(56, 52, 124, 20);
-		panel_2.add(textField_2);
-		textField_2.setColumns(10);
+		tfMae = new JTextField();
+		tfMae.setBounds(56, 52, 124, 20);
+		panel_2.add(tfMae);
+		tfMae.setColumns(10);
 									
-		textField_1 = new JTextField();
-		textField_1.setBounds(56, 21, 124, 20);
-		panel_2.add(textField_1);
-		textField_1.setColumns(10);
+		tfPessoa = new JTextField();
+		tfPessoa.setBounds(56, 21, 124, 20);
+		panel_2.add(tfPessoa);
+		tfPessoa.setColumns(10);
 								
-		textField = new JTextField();
-		textField.setBounds(56, 83, 124, 20);
-		panel_2.add(textField);
-		textField.setColumns(10);
+		tfPai = new JTextField();
+		tfPai.setBounds(56, 83, 124, 20);
+		panel_2.add(tfPai);
+		tfPai.setColumns(10);
 									
 		JLabel lblIndividuo = new JLabel("Pessoa:");
 		lblIndividuo.setBounds(10, 24, 68, 14);
@@ -160,20 +170,71 @@ public class TelaTeste extends JFrame {
 		JLabel lblPai = new JLabel("Pai:");
 		lblPai.setBounds(10, 86, 46, 14);
 		panel_2.add(lblPai);
+		
+		rdbtnCalvice.setEnabled(false);
+		rdbtnOlhos.setEnabled(false);
+		rdbtnPele.setEnabled(false);
+		rdbtnSangue.setEnabled(false);
+		tfPai.setEditable(false);
+		tfMae.setEditable(false);
 										
 		JComboBox comboBox = new JComboBox();
 		comboBox.setBackground(Color.WHITE);
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"\u00C1rvore", "Descendentes", "Compatibilidade", "Probabilidade"}));
 		comboBox.setBounds(10, 26, 190, 20);
 		panel.add(comboBox);
+		comboBox.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				if(comboBox.getSelectedItem().equals("Descendentes")){
+					tfPai.setEditable(true);
+					tfMae.setEditable(true);
+					tfPessoa.setEditable(false);
+					rdbtnCalvice.setEnabled(false);
+					rdbtnOlhos.setEnabled(false);
+					rdbtnPele.setEnabled(false);
+					rdbtnSangue.setEnabled(false);
+				}
+				if(comboBox.getSelectedItem().equals("\u00C1rvore")){
+					tfPai.setEditable(false);
+					tfMae.setEditable(false);
+					tfPessoa.setEditable(true);
+					rdbtnCalvice.setEnabled(false);
+					rdbtnOlhos.setEnabled(false);
+					rdbtnPele.setEnabled(false);
+					rdbtnSangue.setEnabled(false);
+				}
+				if(comboBox.getSelectedItem().equals("Probabilidade")){
+					tfPai.setEditable(true);
+					tfMae.setEditable(true);
+					tfPessoa.setEditable(false);
+					rdbtnCalvice.setEnabled(true);
+					rdbtnOlhos.setEnabled(true);
+					rdbtnPele.setEnabled(true);
+					rdbtnSangue.setEnabled(true);
+				}
+			}
+		});
 										
 		JButton btnExecutar = new JButton("Executar");
 		btnExecutar.setBackground(new Color(199, 21, 133));
 		btnExecutar.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnExecutar.setBounds(10, 319, 190, 44);
 		panel.add(btnExecutar);
+		btnExecutar.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				StringBuffer resposta = new StringBuffer();
+				
+				//COLOCAR UM IF PARA CADA OPÇÃO DO COMBOBOX
+				
+				//teste
+				resposta.append("RESULTADO\n\n");
+				resposta.append(Query.oneSolution("teste2(X).").get("X"));
+				areaResposta.setText(resposta.toString());
+				
+			}
+		});
 										
-		JLabel lblNewLabel = new JLabel("");
+		JLabel lblNewLabel = new JLabel("lul");
 		lblNewLabel.setIcon(new ImageIcon(TelaTeste.class.getResource("/imagens/seqcore_slider_img_resized.png")));
 		lblNewLabel.setBounds(10, 11, 774, 143);
 		contentPane.add(lblNewLabel);

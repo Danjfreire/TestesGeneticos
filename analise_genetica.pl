@@ -327,6 +327,7 @@ consultaPessoa(Nome, Destino, Genes):- consult(Destino), pessoa(Nome, Genes).
 
 
 teste([1,[2,[3]]]).
+teste2([a,b,c]).
 
 
 
