@@ -20,6 +20,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.border.TitledBorder;
 
 import org.jpl7.Atom;
@@ -65,7 +66,6 @@ public class TelaIndividuo extends JFrame {
 	public TelaIndividuo() {
 		setTitle("Novo Indiv\u00EDduo");
 		setBackground(Color.WHITE);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds((int)((Toolkit.getDefaultToolkit().getScreenSize().getWidth() - 460)/2), (int)((Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 521)/2), 460, 521);
 
 		
@@ -150,8 +150,15 @@ public class TelaIndividuo extends JFrame {
 		JMenu mnCalvicie = new JMenu("Calv\u00EDcie");
 		menuBar.add(mnCalvicie);
 		
+		JMenu mnSim = new JMenu("Sim");
+		JMenu mnNao = new JMenu("Não");
+		mnCalvicie.add(mnSim);
+		mnCalvicie.add(mnNao);
+		
 		JMenu mnMasculino_1 = new JMenu("masculino");
-		mnCalvicie.add(mnMasculino_1);
+		JMenu mnMasculino_2 = new JMenu("masculino");
+		mnSim.add(mnMasculino_1);
+		mnNao.add(mnMasculino_2);
 		
 		JMenuItem mntmcc_8 = new JMenuItem("'C','C'");
 		mntmcc_8.addActionListener(new ActionListener() {
@@ -181,10 +188,12 @@ public class TelaIndividuo extends JFrame {
 				textField_1.setEditable(false);
 			}
 		});
-		mnMasculino_1.add(mntmcc_11);
+		mnMasculino_2.add(mntmcc_11);
 		
 		JMenu mnFeminino_1 = new JMenu("feminino");
-		mnCalvicie.add(mnFeminino_1);
+		JMenu mnFeminino_2 = new JMenu("feminino");
+		mnSim.add(mnFeminino_1);
+		mnNao.add(mnFeminino_2);
 		
 		JMenuItem mntmcc_12 = new JMenuItem("'C','C'");
 		mntmcc_12.addActionListener(new ActionListener() {
@@ -204,7 +213,7 @@ public class TelaIndividuo extends JFrame {
 				textField_1.setEditable(false);
 			}
 		});
-		mnFeminino_1.add(mntmcc_13);
+		mnFeminino_2.add(mntmcc_13);
 		
 		JMenuItem mntmcc_14 = new JMenuItem("'c','c'");
 		mntmcc_14.addActionListener(new ActionListener() {
@@ -214,7 +223,7 @@ public class TelaIndividuo extends JFrame {
 				textField_1.setEditable(false);
 			}
 		});
-		mnFeminino_1.add(mntmcc_14);
+		mnFeminino_2.add(mntmcc_14);
 		
 		JMenu mnOlho = new JMenu("Olho");
 		menuBar.add(mnOlho);
@@ -438,9 +447,12 @@ public class TelaIndividuo extends JFrame {
 		contentPane.add(btnCadastrar);
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if(textNome.getText().isEmpty() || textField.getText().isEmpty() || textField_1.getText().isEmpty() || textField_2.getText().isEmpty() || textField_3.getText().isEmpty())
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+				else{
 				inserirPessoaProlog();
 				dispose();
-				
+				}
 			}
 		});
 		

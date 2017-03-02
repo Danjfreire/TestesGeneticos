@@ -1,1 +1,2 @@
 pessoa(wallace, [['IA','IA'],['C','c'],['BM','BM','GA','GV'],['a','a','B','B']]).
+

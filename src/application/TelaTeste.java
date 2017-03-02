@@ -22,6 +22,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JTextField;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
@@ -114,11 +116,11 @@ public class TelaTeste extends JFrame {
 		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Selecionar", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(199, 21, 133)));
 		panel_1.setLayout(null);
 										
-		JRadioButton rdbtnCalvice = new JRadioButton("Calvice");
-		rdbtnCalvice.setBackground(Color.WHITE);
-		rdbtnCalvice.setBounds(6, 18, 74, 23);
-		panel_1.add(rdbtnCalvice);
-		grupo.add(rdbtnCalvice);
+		JRadioButton rdbtnCalvicie = new JRadioButton("Calv\u00EDcie");
+		rdbtnCalvicie.setBackground(Color.WHITE);
+		rdbtnCalvicie.setBounds(6, 18, 74, 23);
+		panel_1.add(rdbtnCalvicie);
+		grupo.add(rdbtnCalvicie);
 		JRadioButton rdbtnSangue = new JRadioButton("Sangue");
 		rdbtnSangue.setBackground(Color.WHITE);
 		rdbtnSangue.setBounds(6, 44, 74, 23);
@@ -171,7 +173,7 @@ public class TelaTeste extends JFrame {
 		lblPai.setBounds(10, 86, 46, 14);
 		panel_2.add(lblPai);
 		
-		rdbtnCalvice.setEnabled(false);
+		rdbtnCalvicie.setEnabled(false);
 		rdbtnOlhos.setEnabled(false);
 		rdbtnPele.setEnabled(false);
 		rdbtnSangue.setEnabled(false);
@@ -189,7 +191,7 @@ public class TelaTeste extends JFrame {
 					tfPai.setEditable(true);
 					tfMae.setEditable(true);
 					tfPessoa.setEditable(false);
-					rdbtnCalvice.setEnabled(false);
+					rdbtnCalvicie.setEnabled(false);
 					rdbtnOlhos.setEnabled(false);
 					rdbtnPele.setEnabled(false);
 					rdbtnSangue.setEnabled(false);
@@ -198,7 +200,7 @@ public class TelaTeste extends JFrame {
 					tfPai.setEditable(false);
 					tfMae.setEditable(false);
 					tfPessoa.setEditable(true);
-					rdbtnCalvice.setEnabled(false);
+					rdbtnCalvicie.setEnabled(false);
 					rdbtnOlhos.setEnabled(false);
 					rdbtnPele.setEnabled(false);
 					rdbtnSangue.setEnabled(false);
@@ -207,7 +209,7 @@ public class TelaTeste extends JFrame {
 					tfPai.setEditable(true);
 					tfMae.setEditable(true);
 					tfPessoa.setEditable(false);
-					rdbtnCalvice.setEnabled(true);
+					rdbtnCalvicie.setEnabled(true);
 					rdbtnOlhos.setEnabled(true);
 					rdbtnPele.setEnabled(true);
 					rdbtnSangue.setEnabled(true);
@@ -223,8 +225,38 @@ public class TelaTeste extends JFrame {
 		btnExecutar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				StringBuffer resposta = new StringBuffer();
-				
-				//COLOCAR UM IF PARA CADA OPÇÃO DO COMBOBOX
+				if(comboBox.getSelectedItem().toString().equals("\u00C1rvore")){
+					//usar tfPessoa.getText()
+					if(tfPessoa.getText().isEmpty())
+						JOptionPane.showMessageDialog(null, "Preencha o campo 'Pessoa'");
+					
+				} else if(comboBox.getSelectedItem().toString().equals("Descendentes")){
+					//usar tfMae.getText() e tfPai.getText()
+					if(tfMae.getText().isEmpty() || tfPai.getText().isEmpty())
+						JOptionPane.showMessageDialog(null, "Preencha os campos 'Pai' e 'Mãe'");
+					
+				} else if(comboBox.getSelectedItem().toString().equals("Compatibilidade")){
+					//usar tfMae.getText() e tfPai.getText()
+					if(tfMae.getText().isEmpty() || tfPai.getText().isEmpty())
+						JOptionPane.showMessageDialog(null, "Preencha os campos 'Pai' e 'Mãe'");
+					
+				} else if(comboBox.getSelectedItem().toString().equals("Probabilidade")){
+					//usar tfMae.getText() e tfPai.getText()
+					if(tfMae.getText().isEmpty() || tfPai.getText().isEmpty())
+						JOptionPane.showMessageDialog(null, "Preencha os campos 'Pai' e 'Mãe'");
+					
+					if(rdbtnCalvicie.isSelected()){
+						
+					} else if(rdbtnSangue.isSelected()){
+						
+					} else if(rdbtnPele.isSelected()){
+						
+					} else if(rdbtnOlhos.isSelected()){
+						
+					} else {
+						JOptionPane.showMessageDialog(null, "Selecione uma opção");
+					}
+				}
 				
 				//teste
 				resposta.append("RESULTADO\n\n");
