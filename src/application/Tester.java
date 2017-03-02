@@ -28,7 +28,9 @@ public class Tester {
 		String c = "teste(X)";
 		System.out.println(Query.oneSolution(c).get("X"));
 		
-		TelaIndividuo t = new TelaIndividuo();
-		t.setVisible(true);
+		//TelaIndividuo t = new TelaIndividuo();
+		//t.setVisible(true);
+		TelaTeste tela = new TelaTeste();
+		tela.setVisible(true);
 	}
 }

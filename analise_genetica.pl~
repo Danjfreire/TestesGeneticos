@@ -381,7 +381,6 @@ inserirPessoa(pessoa(Nome, _), Destino):- consult(Destino), pessoa(Nome, _) , wr
 inserirPessoa(Pessoa, Destino):-append(Destino), write(Pessoa), write('.'), write('\n'), told.
 consultaPessoa(Nome, Destino, Genes):- consult(Destino), pessoa(Nome, Genes).
 
-
 %testes
 teste([1,[2,[3]]]).
 
@@ -391,6 +390,11 @@ teste([1,[2,[3]]]).
 
 
 
+<<<<<<< HEAD
+=======
+teste([1,[2,[3]]]).
+teste2([a,b,c]).
+>>>>>>> origin/master
 
 
 
