@@ -78,7 +78,7 @@ public class TelaIndividuo extends JFrame {
 		JMenu mnTipoA = new JMenu("Tipo A");
 		mnSangue.add(mnTipoA);
 		
-		JMenuItem mntmiaia = new JMenuItem("['IA','IA']");
+		JMenuItem mntmiaia = new JMenuItem("'IA','IA'");
 		mntmiaia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				textField.setEditable(true);
@@ -88,7 +88,7 @@ public class TelaIndividuo extends JFrame {
 		});
 		mnTipoA.add(mntmiaia);
 		
-		JMenuItem mntmiai = new JMenuItem("['IA','i']");
+		JMenuItem mntmiai = new JMenuItem("'IA','i'");
 		mntmiai.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				textField.setEditable(true);
@@ -101,7 +101,7 @@ public class TelaIndividuo extends JFrame {
 		JMenu mnTipoB = new JMenu("Tipo B");
 		mnSangue.add(mnTipoB);
 		
-		JMenuItem mntmibib = new JMenuItem("['IB','IB']");
+		JMenuItem mntmibib = new JMenuItem("'IB','IB'");
 		mntmibib.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				textField.setEditable(true);
@@ -111,7 +111,7 @@ public class TelaIndividuo extends JFrame {
 		});
 		mnTipoB.add(mntmibib);
 		
-		JMenuItem mntmibi = new JMenuItem("['IB','i']");
+		JMenuItem mntmibi = new JMenuItem("'IB','i'");
 		mntmibi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				textField.setEditable(true);
@@ -124,7 +124,7 @@ public class TelaIndividuo extends JFrame {
 		JMenu mnTipoAb = new JMenu("Tipo AB");
 		mnSangue.add(mnTipoAb);
 		
-		JMenuItem mntmiaib = new JMenuItem("['IA','IB']");
+		JMenuItem mntmiaib = new JMenuItem("'IA','IB'");
 		mntmiaib.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				textField.setEditable(true);
@@ -137,7 +137,7 @@ public class TelaIndividuo extends JFrame {
 		JMenu mnTipoO = new JMenu("Tipo O");
 		mnSangue.add(mnTipoO);
 		
-		JMenuItem mntmii = new JMenuItem("['i','i']");
+		JMenuItem mntmii = new JMenuItem("'i','i'");
 		mntmii.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				textField.setEditable(true);
@@ -164,7 +164,7 @@ public class TelaIndividuo extends JFrame {
 		mntmcc_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_1.setEditable(true);
-				textField_1.setText("["+ mntmcc_8.getText() + ",masculino]");
+				textField_1.setText(mntmcc_8.getText() + ",masculino");
 				textField_1.setEditable(false);
 			}
 		});
@@ -174,7 +174,7 @@ public class TelaIndividuo extends JFrame {
 		mntmcc_9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_1.setEditable(true);
-				textField_1.setText("["+ mntmcc_9.getText() + ",masculino]");
+				textField_1.setText(mntmcc_9.getText() + ",masculino");
 				textField_1.setEditable(false);
 			}
 		});
@@ -184,7 +184,7 @@ public class TelaIndividuo extends JFrame {
 		mntmcc_11.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_1.setEditable(true);
-				textField_1.setText("["+ mntmcc_11.getText() + ",masculino]");
+				textField_1.setText(mntmcc_11.getText() + ",masculino");
 				textField_1.setEditable(false);
 			}
 		});
@@ -199,7 +199,7 @@ public class TelaIndividuo extends JFrame {
 		mntmcc_12.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_1.setEditable(true);
-				textField_1.setText("["+ mntmcc_12.getText() + ",feminino]");
+				textField_1.setText( mntmcc_12.getText() + ",feminino");
 				textField_1.setEditable(false);
 			}
 		});
@@ -209,7 +209,7 @@ public class TelaIndividuo extends JFrame {
 		mntmcc_13.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_1.setEditable(true);
-				textField_1.setText("["+ mntmcc_13.getText() + ",feminino]");
+				textField_1.setText( mntmcc_13.getText() + ",feminino");
 				textField_1.setEditable(false);
 			}
 		});
@@ -219,7 +219,7 @@ public class TelaIndividuo extends JFrame {
 		mntmcc_14.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_1.setEditable(true);
-				textField_1.setText("["+ mntmcc_14.getText() + ",feminino]");
+				textField_1.setText(mntmcc_14.getText() + ",feminino");
 				textField_1.setEditable(false);
 			}
 		});
@@ -231,7 +231,7 @@ public class TelaIndividuo extends JFrame {
 		JMenu mnCastanho = new JMenu("Castanho");
 		mnOlho.add(mnCastanho);
 		
-		JMenuItem mntmbmbmgvgv = new JMenuItem("['BM','BM','GV','GV']");
+		JMenuItem mntmbmbmgvgv = new JMenuItem("'BM','BM','GV','GV'");
 		mntmbmbmgvgv.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_2.setEditable(true);
@@ -241,7 +241,7 @@ public class TelaIndividuo extends JFrame {
 		});
 		mnCastanho.add(mntmbmbmgvgv);
 		
-		JMenuItem mntmbmbmgvga = new JMenuItem("['BM','BM','GV','GA']");
+		JMenuItem mntmbmbmgvga = new JMenuItem("'BM','BM','GV','GA'");
 		mntmbmbmgvga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_2.setEditable(true);
@@ -251,7 +251,7 @@ public class TelaIndividuo extends JFrame {
 		});
 		mnCastanho.add(mntmbmbmgvga);
 		
-		JMenuItem mntmbmbmgaga = new JMenuItem("['BM','BM','GA','GA']");
+		JMenuItem mntmbmbmgaga = new JMenuItem("'BM','BM','GA','GA'");
 		mntmbmbmgaga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_2.setEditable(true);
@@ -261,7 +261,7 @@ public class TelaIndividuo extends JFrame {
 		});
 		mnCastanho.add(mntmbmbmgaga);
 		
-		JMenuItem mntmbmbagvgv = new JMenuItem("['BM','BA','GV','GV']");
+		JMenuItem mntmbmbagvgv = new JMenuItem("'BM','BA','GV','GV'");
 		mntmbmbagvgv.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_2.setEditable(true);
@@ -271,7 +271,7 @@ public class TelaIndividuo extends JFrame {
 		});
 		mnCastanho.add(mntmbmbagvgv);
 		
-		JMenuItem mntmbmbagvga = new JMenuItem("['BM','BA','GV','GA']");
+		JMenuItem mntmbmbagvga = new JMenuItem("'BM','BA','GV','GA'");
 		mntmbmbagvga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_2.setEditable(true);
@@ -281,7 +281,7 @@ public class TelaIndividuo extends JFrame {
 		});
 		mnCastanho.add(mntmbmbagvga);
 		
-		JMenuItem mntmbmbagaga = new JMenuItem("['BM','BA','GA','GA']");
+		JMenuItem mntmbmbagaga = new JMenuItem("'BM','BA','GA','GA'");
 		mntmbmbagaga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_2.setEditable(true);
@@ -294,7 +294,7 @@ public class TelaIndividuo extends JFrame {
 		JMenu mnVerde = new JMenu("Verde");
 		mnOlho.add(mnVerde);
 		
-		JMenuItem mntmbabagvgv = new JMenuItem("['BA','BA','GV','GV']");
+		JMenuItem mntmbabagvgv = new JMenuItem("'BA','BA','GV','GV'");
 		mntmbabagvgv.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_2.setEditable(true);
@@ -304,7 +304,7 @@ public class TelaIndividuo extends JFrame {
 		});
 		mnVerde.add(mntmbabagvgv);
 		
-		JMenuItem mntmbabagvga = new JMenuItem("['BA','BA','GV','GA']");
+		JMenuItem mntmbabagvga = new JMenuItem("'BA','BA','GV','GA'");
 		mntmbabagvga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_2.setEditable(true);
@@ -317,7 +317,7 @@ public class TelaIndividuo extends JFrame {
 		JMenu mnAzul = new JMenu("Azul");
 		mnOlho.add(mnAzul);
 		
-		JMenuItem mntmbabagaga = new JMenuItem("['BA','BA','GA','GA']");
+		JMenuItem mntmbabagaga = new JMenuItem("'BA','BA','GA','GA'");
 		mntmbabagaga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_2.setEditable(true);
@@ -333,7 +333,7 @@ public class TelaIndividuo extends JFrame {
 		JMenu mnPreto = new JMenu("Preto");
 		mnPele.add(mnPreto);
 		
-		JMenuItem mntmaabb = new JMenuItem("['A','A','B','B']");
+		JMenuItem mntmaabb = new JMenuItem("'A','A','B','B'");
 		mntmaabb.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_3.setEditable(true);
@@ -346,7 +346,7 @@ public class TelaIndividuo extends JFrame {
 		JMenu mnMorenoEscuro = new JMenu("Moreno escuro");
 		mnPele.add(mnMorenoEscuro);
 		
-		JMenuItem mntmaabb_1 = new JMenuItem("['A','A','B','b']");
+		JMenuItem mntmaabb_1 = new JMenuItem("'A','A','B','b'");
 		mntmaabb_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_3.setEditable(true);
@@ -356,7 +356,7 @@ public class TelaIndividuo extends JFrame {
 		});
 		mnMorenoEscuro.add(mntmaabb_1);
 		
-		JMenuItem mntmaabb_2 = new JMenuItem("['A','a','B','B']");
+		JMenuItem mntmaabb_2 = new JMenuItem("'A','a','B','B'");
 		mntmaabb_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_3.setEditable(true);
@@ -369,7 +369,7 @@ public class TelaIndividuo extends JFrame {
 		JMenu mnMoreno = new JMenu("Moreno");
 		mnPele.add(mnMoreno);
 		
-		JMenuItem mntmaabb_3 = new JMenuItem("['A','A','b','b']");
+		JMenuItem mntmaabb_3 = new JMenuItem("'A','A','b','b'");
 		mntmaabb_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_3.setEditable(true);
@@ -379,7 +379,7 @@ public class TelaIndividuo extends JFrame {
 		});
 		mnMoreno.add(mntmaabb_3);
 		
-		JMenuItem mntmaabb_4 = new JMenuItem("['A','a','B','b']");
+		JMenuItem mntmaabb_4 = new JMenuItem("'A','a','B','b'");
 		mntmaabb_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_3.setEditable(true);
@@ -389,7 +389,7 @@ public class TelaIndividuo extends JFrame {
 		});
 		mnMoreno.add(mntmaabb_4);
 		
-		JMenuItem mntmaabb_5 = new JMenuItem("['a','a','B','B']");
+		JMenuItem mntmaabb_5 = new JMenuItem("'a','a','B','B'");
 		mntmaabb_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_3.setEditable(true);
@@ -402,7 +402,7 @@ public class TelaIndividuo extends JFrame {
 		JMenu mnMorenoClaro = new JMenu("Moreno claro");
 		mnPele.add(mnMorenoClaro);
 		
-		JMenuItem mntmaabb_6 = new JMenuItem("['A','a','b','b']");
+		JMenuItem mntmaabb_6 = new JMenuItem("'A','a','b','b'");
 		mntmaabb_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_3.setEditable(true);
@@ -412,7 +412,7 @@ public class TelaIndividuo extends JFrame {
 		});
 		mnMorenoClaro.add(mntmaabb_6);
 		
-		JMenuItem mntmaabb_7 = new JMenuItem("['a','a','B','b']");
+		JMenuItem mntmaabb_7 = new JMenuItem("'a','a','B','b'");
 		mntmaabb_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_3.setEditable(true);
@@ -425,7 +425,7 @@ public class TelaIndividuo extends JFrame {
 		JMenu mnBranco = new JMenu("Branco");
 		mnPele.add(mnBranco);
 		
-		JMenuItem mntmaabb_8 = new JMenuItem("['a','a','b','b']");
+		JMenuItem mntmaabb_8 = new JMenuItem("'a','a','b','b'");
 		mntmaabb_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textField_3.setEditable(true);
@@ -528,7 +528,8 @@ public class TelaIndividuo extends JFrame {
 		String caminho =  temp.getAbsolutePath();
 		String definitivo = caminho.replace("\\", "\\\\");
 		String caminhoTXT = definitivo + "\\\\pessoas.txt";
-		String genes = "[" + textField.getText() + "," + textField_1.getText() + "," + textField_2.getText() + "," + textField_3.getText() + "]";
+		String genes = "[" + "["+textField.getText()+"]" + "," + "["+textField_1.getText() +"]"+ "," +"["+ textField_2.getText()+"]" + "," +
+		"["+ textField_3.getText()+ "]"+ "]";
 		String proposicao = "pessoa('" + textNome.getText() + "'," + genes + ")";
 		String inserirPessoa = "inserirPessoa(" + proposicao +")";
 		System.out.println(inserirPessoa);		

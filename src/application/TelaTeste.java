@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JFrame;
@@ -229,7 +230,11 @@ public class TelaTeste extends JFrame {
 					//usar tfPessoa.getText()
 					if(tfPessoa.getText().isEmpty())
 						JOptionPane.showMessageDialog(null, "Preencha o campo 'Pessoa'");
-					
+					else{
+						//resposta.append("RESULTADO\n\n");
+						//resposta.append(Query.oneSolution("").get("X"));
+					}
+						
 				} else if(comboBox.getSelectedItem().toString().equals("Descendentes")){
 					//usar tfMae.getText() e tfPai.getText()
 					if(tfMae.getText().isEmpty() || tfPai.getText().isEmpty())
@@ -250,7 +255,14 @@ public class TelaTeste extends JFrame {
 					} else if(rdbtnSangue.isSelected()){
 						
 					} else if(rdbtnPele.isSelected()){
-						
+						resposta.append("RESULTADO\n\n");
+						File temp = new File("");
+						String caminho = temp.getAbsolutePath();
+						String definitivo = caminho.replace("\\", "\\\\");
+						String caminhoTXT = definitivo + "\\\\pessoas.txt";
+						resposta.append(Query.oneSolution("probabilidadePeleNome('"+tfPai.getText()+"','"+tfMae.getText()+"'+'branco','"+caminhoTXT +"',X).").get("X"));
+						//resposta.append(Query.oneSolution("teste(X).").get("X"));
+						areaResposta.setText(resposta.toString());
 					} else if(rdbtnOlhos.isSelected()){
 						
 					} else {
@@ -259,9 +271,9 @@ public class TelaTeste extends JFrame {
 				}
 				
 				//teste
-				resposta.append("RESULTADO\n\n");
-				resposta.append(Query.oneSolution("teste2(X).").get("X"));
-				areaResposta.setText(resposta.toString());
+				//resposta.append("RESULTADO\n\n");
+				//resposta.append(Query.oneSolution("teste2(X).").get("X"));
+				
 				
 			}
 		});
