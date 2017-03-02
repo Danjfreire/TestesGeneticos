@@ -378,14 +378,17 @@ descendentes(Homem, Mulher, Descendentes, Nivel):-
 
 %insercao e consulta
 
-vazio(''):-!,fail.
-vazio(_).
+vazio('').
 
+inserirPessoa(pessoa(Nome,_)):-vazio(Nome),!,fail.
+inserirPessoa(pessoa(_,[Sangue|_])):-vazio(Sangue),!,fail.
+inserirPessoa(pessoa(_,[_,Calvicie|_])):-vazio(Calvicie),!,fail.
+inserirPessoa(pessoa(_,[_,_,Olho,_])):-vazio(Olho),!,fail.
+inserirPessoa(pessoa(_,[_,_,_,Pele])):-vazio(Pele),!,fail.
 inserirPessoa(pessoa(Nome, _)):- absolute_file_name('pessoas.txt',Destino),
 consult(Destino), pessoa(Nome, _) , write('Nome já cadastrado!'), !, fail.
-inserirPessoa(pessoa(Nome,[Sangue, Calvicie, Olho, Pele])):-absolute_file_name('pessoas.txt',Destino),
-vazio(Nome),vazio(Sangue), vazio(Calvicie), vazio(Olho), vazio(Pele),
-append(Destino), write('pessoa(Nome,[Sangue, Calvicie, Olho, Pele])'), write('.'), write('\n'), told.
+inserirPessoa(Pessoa):-absolute_file_name('pessoas.txt',Destino),
+append(Destino),writeq(Pessoa),write('.'), write('\n'), told.
 consultaPessoa(Nome, Genes):-absolute_file_name('pessoas.txt',Destino),
 consult(Destino), pessoa(Nome, Genes).
 
