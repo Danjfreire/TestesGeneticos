@@ -2,3 +2,4 @@ pessoa(wallace, [['IA','IA'],['C','c'],['BM','BM','GA','GV'],['a','a','B','B']])
 
 
 pessoa(maria,[[IA,IA],[C,c,feminino],[BM,BM,GV,GV],[A,A,b,b]]).
+pessoa(natali,[[IA,IA],[C,C,masculino],[BM,BM,GV,GV],[A,A,B,b]]).

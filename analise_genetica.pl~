@@ -16,14 +16,14 @@ idSangue(2, 'IB').
 idSangue(3, 'i').
 
 %calvice(geneP, geneM, sexo, fenótipo)
-calvice('C', 'C', 'masculino', 'calvo').
-calvice('C', 'C', 'feminino', 'calva').
-calvice('C', 'c', 'masculino', 'calvo').
-calvice('c', 'C', 'masculino', 'calvo').
-calvice('C', 'c', 'feminino', 'não calva').
-calvice('c', 'C', 'feminino', 'não calva').
-calvice('c', 'c', 'masculino', 'não calvo').
-calvice('c', 'c', 'feminino', 'não calva').
+calvice('C', 'C', 'masculino', 'sim').
+calvice('C', 'C', 'feminino', 'sim').
+calvice('C', 'c', 'masculino', 'sim').
+calvice('c', 'C', 'masculino', 'sim').
+calvice('C', 'c', 'feminino', 'não').
+calvice('c', 'C', 'feminino', 'não').
+calvice('c', 'c', 'masculino', 'não').
+calvice('c', 'c', 'feminino', 'não').
 
 
 idCalvice(1, 'c').
@@ -43,22 +43,22 @@ idOlhoG(1, 'GV').
 idOlhoG(2, 'GA').
 
 %corPele(geneP1, geneM1, geneP2, geneM2, fenótipo)
-corPele('A', 'A', 'B', 'B', 'preta').
-corPele('A', 'A', 'B', 'b', 'morena_escura').
-corPele('A', 'A', 'b', 'B', 'morena_escura').
-corPele('A', 'A', 'b', 'b', 'morena').
-corPele('A', 'a', 'B', 'B', 'morena_escura').
-corPele('A', 'a', 'B', 'b', 'morena').
-corPele('A', 'a', 'b', 'B', 'morena').
-corPele('A', 'a', 'b', 'b', 'morena_clara').
-corPele('a', 'A', 'B', 'B', 'morena_escura').
-corPele('a', 'A', 'B', 'b', 'morena').
-corPele('a', 'A', 'b', 'B', 'morena').
-corPele('a', 'A', 'b', 'b', 'morena_clara').
-corPele('a', 'a', 'B', 'B', 'morena').
-corPele('a', 'a', 'B', 'b', 'morena_clara').
-corPele('a', 'a', 'b', 'B', 'morena_clara').
-corPele('a', 'a', 'b', 'b', 'branca').
+corPele('A', 'A', 'B', 'B', 'preto').
+corPele('A', 'A', 'B', 'b', 'moreno-escuro').
+corPele('A', 'A', 'b', 'B', 'moreno-escuro').
+corPele('A', 'A', 'b', 'b', 'moreno').
+corPele('A', 'a', 'B', 'B', 'moreno-escuro').
+corPele('A', 'a', 'B', 'b', 'moreno').
+corPele('A', 'a', 'b', 'B', 'moreno').
+corPele('A', 'a', 'b', 'b', 'moreno-claro').
+corPele('a', 'A', 'B', 'B', 'moreno-escuro').
+corPele('a', 'A', 'B', 'b', 'moreno').
+corPele('a', 'A', 'b', 'B', 'moreno').
+corPele('a', 'A', 'b', 'b', 'moreno-claro').
+corPele('a', 'a', 'B', 'B', 'moreno').
+corPele('a', 'a', 'B', 'b', 'moreno-claro').
+corPele('a', 'a', 'b', 'B', 'moreno-claro').
+corPele('a', 'a', 'b', 'b', 'branco').
 
 idPeleA(1, 'A').
 idPeleA(2, 'a').
@@ -67,6 +67,28 @@ idPeleB(1, 'B').
 idPeleB(2, 'b').
 
 %Operacoes
+
+removerTodos(Elem, [Elem], []).
+removerTodos(_, [Elem], [Elem]).
+removerTodos(Elem, [Elem|Lista1], Lista2):-
+	removerTodos(Elem, Lista1, Lista2).
+removerTodos(Elem1, [Elem2|Lista1], [Elem2|Lista2]):-
+	removerTodos(Elem1, Lista1, Lista2).
+
+%listaDiferente([Elem,Elem],[Elem]).
+%listaDiferente([Elem1,Elem2], [Elem1,Elem2]).
+listaDiferente([],[]).
+listaDiferente([Elem|Lista1], [Elem|Lista]):-
+	member(Elem, Lista1), removerTodos(Elem, Lista1, Lista2),
+	listaDiferente(Lista2,Lista).
+listaDiferente([Elem|Lista1], [Elem|Lista]):-
+	listaDiferente(Lista1,Lista).
+
+itemPorcentagem(Lista, [Elem], [[Elem,Z]]):-tamanhoLista(Lista,X), tamanhoListaEspecial(Lista, Elem, Y),
+	Z is( Y/X)*100.
+itemPorcentagem(Lista1, [Elem|Lista2], [[Elem,Z]|Lista]):-
+	tamanhoLista(Lista1,X), tamanhoListaEspecial(Lista1, Elem, Y),
+	Z is( Y/X)*100, itemPorcentagem(Lista1,  Lista2, Lista).
 
 eLista(X):-var(X),!,fail.
 eLista([]).
@@ -133,6 +155,14 @@ gerarGeneSangue([Alelo1,Alelo2], [[Alelo1, X],[Alelo2, Y]]):-
 	aleatorio3(Num1), idSangue(Num1, X),
 	aleatorio3(Num2), idSangue(Num2, Y).
 
+probabilidadeSangueNome(Pai, Mae, Fenotipo, Destino, Percentual):-
+	consultaPessoa(Pai, Destino, [Gene1|_]), consultaPessoa(Mae, Destino, [Gene2|_]),
+	probabilidadeSanguineo(Gene1, Gene2, Fenotipo, Percentual).
+
+probabilidadeSangueTodos(Pai, Mae, Destino, Lista):-
+	consultaPessoa(Pai, Destino, [Gene1|_]), consultaPessoa(Mae, Destino, [Gene2|_]),
+	retornaFenotipoSanguineo(Gene1, Gene2, Tipos), itemPorcentagem(Tipos, Tipos, Lista1),
+	listaDiferente(Lista1,Lista).
 
 %Tipo calvice
 
@@ -152,6 +182,15 @@ probabilidadeCalvice(GeneP, GeneM, Fenotipo, Percentual):-
 gerarGeneCalvice([Alelo1,Alelo2], [[Alelo1, X],[Alelo2, Y]]):-
 	aleatorio2(Num1), idCalvice(Num1, X),
 	aleatorio2(Num2), idCalvice(Num2, Y).
+
+probabilidadeCalvicieNome(Pai, Mae, Fenotipo, Destino, Percentual):-
+	consultaPessoa(Pai, Destino, [_,[G1,G2,_]|_]), consultaPessoa(Mae, Destino, [_,[G3,G4,_]|_]),
+	probabilidadeCalvice([G1,G2],[G3,G4], Fenotipo, Percentual).
+
+probabilidadeCalvicieTodos(Pai, Mae, Destino, Lista):-
+	consultaPessoa(Pai, Destino, [_,[G1,G2,_]|_]), consultaPessoa(Mae, Destino, [_,[G3,G4,_]|_]),
+	retornaFenotipoCalvice([G1,G2], [G3,G4], Lista1), itemPorcentagem(Lista1, Lista1, Lista2),
+	listaDiferente(Lista2, Lista).
 
 %Tipo olho
 
@@ -175,6 +214,15 @@ gerarGeneOlho([Alelo1,Alelo2], [Alelo3,Alelo4],[[Alelo1, W],[Alelo3, X],[Alelo2,
 	aleatorio2(Num3), idOlhoB(Num3, Y),
 	aleatorio2(Num4), idOlhoG(Num4, Z).
 
+probabilidadeOlhoNome(Pai, Mae, Fenotipo, Destino, Percentual):-
+	consultaPessoa(Pai, Destino, [_,_,[O1,O2,O3,O4],_]), consultaPessoa(Mae, Destino, [_,_,[O5,O6,O7,O8],_]),
+	probabilidadeOlho([O1,O2], [O3,O4], [O5,O6], [O7,O8], Fenotipo, Percentual).
+
+probabilidadeOlhoTodos(Pai, Mae, Destino, Lista):-
+	consultaPessoa(Pai, Destino, [_,_,[O1,O2,O3,O4],_]), consultaPessoa(Mae, Destino, [_,_,[O5,O6,O7,O8],_]),
+	retornaFenotipoOlho([O1,O2],[O3,O4],[O5,O6],[O7,O8],Lista1), itemPorcentagem(Lista1, Lista1, Lista2),
+	listaDiferente(Lista2,Lista).
+
 %Tipo pele
 
 listaPele([[W,X,Y,Z]], [Fenotipo]):- corPele(W,X,Y,Z, Fenotipo).
@@ -196,6 +244,15 @@ gerarGenePele([Alelo1,Alelo2], [Alelo3,Alelo4],[[Alelo1, W],[Alelo3, X],[Alelo2,
 	aleatorio2(Num2), idPeleB(Num2, X),
 	aleatorio2(Num3), idPeleA(Num3, Y),
 	aleatorio2(Num4), idPeleB(Num4, Z).
+
+probabilidadePeleNome(Pai, Mae, Fenotipo, Destino, Percentual):-
+	consultaPessoa(Pai, Destino, [_,_,_,[P1,P2,P3,P4]]), consultaPessoa(Mae, Destino, [_,_,_,[P5,P6,P7,P8]]),
+	probabilidadePele([P1,P2],[P3,P4],[P5,P6],[P7,P8], Fenotipo, Percentual).
+
+probabilidadePeleTodos(Pai, Mae, Destino, Lista):-
+	consultaPessoa(Pai, Destino, [_,_,_,[P1,P2,P3,P4]]), consultaPessoa(Mae, Destino, [_,_,_,[P5,P6,P7,P8]]),
+	retornaFenotipoPele([P1,P2],[P3,P4],[P5,P6],[P7,P8], Lista1), itemPorcentagem(Lista1, Lista1, Lista2),
+	listaDiferente(Lista2, Lista).
 
 %Arvore genealogica
 
@@ -323,6 +380,13 @@ descendentes(Homem, Mulher, Descendentes, Nivel):-
 inserirPessoa(pessoa(Nome, _), Destino):- consult(Destino), pessoa(Nome, _) , write('Nome já cadastrado!'), !, fail.
 inserirPessoa(Pessoa, Destino):-append(Destino), write(Pessoa), write('.'), write('\n'), told.
 consultaPessoa(Nome, Destino, Genes):- consult(Destino), pessoa(Nome, Genes).
+
+
+%testes
+teste([1,[2,[3]]]).
+
+
+
 
 
 
