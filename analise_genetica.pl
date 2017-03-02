@@ -380,7 +380,7 @@ descendentes(Homem, Mulher, Descendentes, Nivel):-
 
 vazio(''):-!,fail.
 vazio(_).
-/*
+
 inserirPessoa(pessoa(Nome, _)):- absolute_file_name('pessoas.txt',Destino),
 consult(Destino), pessoa(Nome, _) , write('Nome já cadastrado!'), !, fail.
 inserirPessoa(pessoa(Nome,[Sangue, Calvicie, Olho, Pele])):-absolute_file_name('pessoas.txt',Destino),
@@ -388,7 +388,7 @@ vazio(Nome),vazio(Sangue), vazio(Calvicie), vazio(Olho), vazio(Pele),
 append(Destino), write('pessoa(Nome,[Sangue, Calvicie, Olho, Pele])'), write('.'), write('\n'), told.
 consultaPessoa(Nome, Genes):-absolute_file_name('pessoas.txt',Destino),
 consult(Destino), pessoa(Nome, Genes).
-*/
+
 %testes
 teste([1,[2,[3]]]).
 

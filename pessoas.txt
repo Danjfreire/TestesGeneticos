@@ -1,2 +1,3 @@
 pessoa(wallace, [['IA','IA'],['C','c'],['BM','BM','GA','GV'],['a','a','B','B']]).
 
+pessoa(Nome,[Sangue, Calvicie, Olho, Pele]).

@@ -530,7 +530,7 @@ public class TelaIndividuo extends JFrame {
 		String caminhoTXT = definitivo + "\\\\pessoas.txt";
 		String genes = "[" + textField.getText() + "," + textField_1.getText() + "," + textField_2.getText() + "," + textField_3.getText() + "]";
 		String proposicao = "pessoa('" + textNome.getText() + "'," + genes + ")";
-		String inserirPessoa = "inserirPessoa(" + proposicao + ",'" + caminhoTXT + "')";
+		String inserirPessoa = "inserirPessoa(" + proposicao +")";
 		System.out.println(inserirPessoa);		
 		Query q1 = new Query(inserirPessoa);
 		System.out.println( "consult " + (q1.hasSolution() ? "succeeded" : "failed"));
