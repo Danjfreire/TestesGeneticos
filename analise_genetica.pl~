@@ -155,12 +155,12 @@ gerarGeneSangue([Alelo1,Alelo2], [[Alelo1, X],[Alelo2, Y]]):-
 	aleatorio3(Num1), idSangue(Num1, X),
 	aleatorio3(Num2), idSangue(Num2, Y).
 
-probabilidadeSangueNome(Pai, Mae, Fenotipo, Percentual):- %absolute_file_name('pessoas.txt',Destino),
-	consultaPessoa(Pai, Destino, [Gene1|_]), consultaPessoa(Mae, Destino, [Gene2|_]),
+probabilidadeSangueNome(Pai, Mae, Fenotipo, Percentual):-
+	consultaPessoa(Pai, [Gene1|_]), consultaPessoa(Mae, [Gene2|_]),
 	probabilidadeSanguineo(Gene1, Gene2, Fenotipo, Percentual).
 
-probabilidadeSangueTodos(Pai, Mae, Lista):-%absolute_file_name('pessoas.txt',Destino),
-	consultaPessoa(Pai, Destino, [Gene1|_]), consultaPessoa(Mae, Destino, [Gene2|_]),
+probabilidadeSangueTodos(Pai, Mae, Lista):-
+	consultaPessoa(Pai, [Gene1|_]), consultaPessoa(Mae, [Gene2|_]),
 	retornaFenotipoSanguineo(Gene1, Gene2, Tipos), itemPorcentagem(Tipos, Tipos, Lista1),
 	listaDiferente(Lista1,Lista).
 
@@ -183,12 +183,12 @@ gerarGeneCalvice([Alelo1,Alelo2], [[Alelo1, X],[Alelo2, Y]]):-
 	aleatorio2(Num1), idCalvice(Num1, X),
 	aleatorio2(Num2), idCalvice(Num2, Y).
 
-probabilidadeCalvicieNome(Pai, Mae, Fenotipo, Percentual):-%absolute_file_name('pessoas.txt',Destino),
-	consultaPessoa(Pai, Destino, [_,[G1,G2,_]|_]), consultaPessoa(Mae, Destino, [_,[G3,G4,_]|_]),
+probabilidadeCalvicieNome(Pai, Mae, Fenotipo, Percentual):-
+	consultaPessoa(Pai, [_,[G1,G2,_]|_]), consultaPessoa(Mae, [_,[G3,G4,_]|_]),
 	probabilidadeCalvice([G1,G2],[G3,G4], Fenotipo, Percentual).
 
-probabilidadeCalvicieTodos(Pai, Mae, Lista):-absolute_file_name('pessoas.txt',Destino),
-	consultaPessoa(Pai, Destino, [_,[G1,G2,_]|_]), consultaPessoa(Mae, Destino, [_,[G3,G4,_]|_]),
+probabilidadeCalvicieTodos(Pai, Mae, Lista):-
+	consultaPessoa(Pai, [_,[G1,G2,_]|_]), consultaPessoa(Mae, [_,[G3,G4,_]|_]),
 	retornaFenotipoCalvice([G1,G2], [G3,G4], Lista1), itemPorcentagem(Lista1, Lista1, Lista2),
 	listaDiferente(Lista2, Lista).
 
@@ -214,12 +214,12 @@ gerarGeneOlho([Alelo1,Alelo2], [Alelo3,Alelo4],[[Alelo1, W],[Alelo3, X],[Alelo2,
 	aleatorio2(Num3), idOlhoB(Num3, Y),
 	aleatorio2(Num4), idOlhoG(Num4, Z).
 
-probabilidadeOlhoNome(Pai, Mae, Fenotipo, Percentual):-%absolute_file_name('pessoas.txt',Destino),
-	consultaPessoa(Pai, Destino, [_,_,[O1,O2,O3,O4],_]), consultaPessoa(Mae, Destino, [_,_,[O5,O6,O7,O8],_]),
+probabilidadeOlhoNome(Pai, Mae, Fenotipo, Percentual):-
+	consultaPessoa(Pai, [_,_,[O1,O2,O3,O4],_]), consultaPessoa(Mae, [_,_,[O5,O6,O7,O8],_]),
 	probabilidadeOlho([O1,O2], [O3,O4], [O5,O6], [O7,O8], Fenotipo, Percentual).
 
-probabilidadeOlhoTodos(Pai, Mae, Lista):-%absolute_file_name('pessoas.txt',Destino),
-	consultaPessoa(Pai, Destino, [_,_,[O1,O2,O3,O4],_]), consultaPessoa(Mae, Destino, [_,_,[O5,O6,O7,O8],_]),
+probabilidadeOlhoTodos(Pai, Mae, Lista):-
+	consultaPessoa(Pai, [_,_,[O1,O2,O3,O4],_]), consultaPessoa(Mae, [_,_,[O5,O6,O7,O8],_]),
 	retornaFenotipoOlho([O1,O2],[O3,O4],[O5,O6],[O7,O8],Lista1), itemPorcentagem(Lista1, Lista1, Lista2),
 	listaDiferente(Lista2,Lista).
 
@@ -245,12 +245,12 @@ gerarGenePele([Alelo1,Alelo2], [Alelo3,Alelo4],[[Alelo1, W],[Alelo3, X],[Alelo2,
 	aleatorio2(Num3), idPeleA(Num3, Y),
 	aleatorio2(Num4), idPeleB(Num4, Z).
 
-probabilidadePeleNome(Pai, Mae, Fenotipo, Percentual):-%absolute_file_name('pessoas.txt',Destino),
-	consultaPessoa(Pai, Destino, [_,_,_,[P1,P2,P3,P4]]), consultaPessoa(Mae, Destino, [_,_,_,[P5,P6,P7,P8]]),
+probabilidadePeleNome(Pai, Mae, Fenotipo, Percentual):-
+	consultaPessoa(Pai, [_,_,_,[P1,P2,P3,P4]]), consultaPessoa(Mae, [_,_,_,[P5,P6,P7,P8]]),
 	probabilidadePele([P1,P2],[P3,P4],[P5,P6],[P7,P8], Fenotipo, Percentual).
 
-probabilidadePeleTodos(Pai, Mae, Lista):-%absolute_file_name('pessoas.txt',Destino),
-	consultaPessoa(Pai, Destino, [_,_,_,[P1,P2,P3,P4]]), consultaPessoa(Mae, Destino, [_,_,_,[P5,P6,P7,P8]]),
+probabilidadePeleTodos(Pai, Mae, Lista):-
+	consultaPessoa(Pai, [_,_,_,[P1,P2,P3,P4]]), consultaPessoa(Mae, [_,_,_,[P5,P6,P7,P8]]),
 	retornaFenotipoPele([P1,P2],[P3,P4],[P5,P6],[P7,P8], Lista1), itemPorcentagem(Lista1, Lista1, Lista2),
 	listaDiferente(Lista2, Lista).
 
@@ -283,9 +283,10 @@ gerarIdentificadoresArvore([_],[[individuo, 1]]).
 gerarIdentificadoresArvore([_|Individuos],[[individuo,X]|[[individuo, Z]|Indentificadores]] ):-
 	gerarIdentificadoresArvore(Individuos, [[individuo, Z]|Indentificadores]), X is Z + 1.
 
-
-arvoreGenealogica(Pessoa, Arvore):- preArvore(4, [Pessoa], SubArvore), concatenarLista([Pessoa],SubArvore, Arvore1),
-	reverse(Arvore1,Arvore).
+arvoreGenealogica(Pessoa, Arvore, Nivel):- consultaPessoa(Pessoa,[S,[C1,C2,_],O,P]),
+	preArvore(Nivel, [[S,[C1,C2],O,P]], SubArvore), gerarIdentificadoresArvore(SubArvore, Ids),
+	concatenarLista(Ids,[[Pessoa]], Identificadores),concatenarLista([[S,[C1,C2],O,P]], SubArvore, ArvoreR),
+	reverse(ArvoreR,ArvoreI), concatenarLista([Identificadores],[ArvoreI], Arvore).
 
 %Descendentes até um nivel dado
 
