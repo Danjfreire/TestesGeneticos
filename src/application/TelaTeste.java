@@ -269,37 +269,65 @@ public class TelaTeste extends JFrame {
 						JOptionPane.showMessageDialog(null, "Preencha os campos 'Pai' e 'Mãe'");
 					
 					if(rdbtnCalvicie.isSelected()){
+						resposta.append("calvo: ");
+						resposta.append(Query.oneSolution("probabilidadeCalvicieNome("+tfPai.getText() +","+ tfMae.getText()+",'sim'"+",X).").get("X"));
+						resposta.append("%\n");
+						resposta.append("não calvo: ");
+						resposta.append(Query.oneSolution("probabilidadeCalvicieNome("+tfPai.getText()+","+tfMae.getText()+",'não',X).").get("X"));
+						resposta.append("%\n");
+						
+						areaResposta.setText(resposta.toString());
 						
 					} else if(rdbtnSangue.isSelected()){
+						resposta.append("A: ");
+						resposta.append(Query.oneSolution("probabilidadeSangueNome("+tfPai.getText() +","+ tfMae.getText()+",'A'"+",X).").get("X"));
+						resposta.append("%\n");
+						resposta.append("B: ");
+						resposta.append(Query.oneSolution("probabilidadeSangueNome("+tfPai.getText()+","+tfMae.getText()+",'B',X).").get("X"));
+						resposta.append("%\n");
+						resposta.append("AB: ");
+						resposta.append(Query.oneSolution("probabilidadeSangueNome("+tfPai.getText()+","+tfMae.getText()+",'AB',X).").get("X"));
+						resposta.append("%\n");
+						resposta.append("O: ");
+						resposta.append(Query.oneSolution("probabilidadeSangueNome("+tfPai.getText()+","+tfMae.getText()+",'O',X).").get("X"));
+						resposta.append("%\n");
+						
+						areaResposta.setText(resposta.toString());
 						
 					} else if(rdbtnPele.isSelected()){
-						resposta.append("RESULTADO\n\n");
-						File temp = new File("");
-						String caminho = temp.getAbsolutePath();
-						String definitivo = caminho.replace("\\", "\\\\");
-						String caminhoTXT = definitivo + "\\\\pessoas.txt";
 						resposta.append("Branco: ");
-						
+					
 						//ajeitar essas query => Estudar C:\Program Files\swipl\doc\packages\jpl\java_api
-						resposta.append(Query.oneSolution("probabilidadePeleNome('"+tfPai.getText()+"','"+tfMae.getText()+"'+'branco','"+caminhoTXT +"',X).").get("X"));
-						resposta.append("\n");
+						resposta.append(Query.oneSolution("probabilidadePeleNome("+tfPai.getText() +","+ tfMae.getText()+",branco"+",X).").get("X"));
+						resposta.append("%\n");
 						resposta.append("Moreno Claro: ");
-						resposta.append(Query.oneSolution("probabilidadePeleNome('"+tfPai.getText()+"','"+tfMae.getText()+"'+'moreno-claro','"+caminhoTXT +"',X).").get("X"));
-						resposta.append("\n");
+						resposta.append(Query.oneSolution("probabilidadePeleNome("+tfPai.getText()+","+tfMae.getText()+",'moreno-claro',X).").get("X"));
+						resposta.append("%\n");
 						resposta.append("Moreno: ");
-						resposta.append(Query.oneSolution("probabilidadePeleNome('"+tfPai.getText()+"','"+tfMae.getText()+"'+'moreno','"+caminhoTXT +"',X).").get("X"));
-						resposta.append("\n");
+						resposta.append(Query.oneSolution("probabilidadePeleNome("+tfPai.getText()+","+tfMae.getText()+",'moreno',X).").get("X"));
+						resposta.append("%\n");
 						resposta.append("Moreno Escuro: ");
-						resposta.append(Query.oneSolution("probabilidadePeleNome('"+tfPai.getText()+"','"+tfMae.getText()+"'+'moreno-escuro','"+caminhoTXT +"',X).").get("X"));
-						resposta.append("\n");
-						resposta.append("Preto: ");
-						resposta.append(Query.oneSolution("probabilidadePeleNome('"+tfPai.getText()+"','"+tfMae.getText()+"'+'preto','"+caminhoTXT +"',X).").get("X"));
-						resposta.append("\n");
+						resposta.append(Query.oneSolution("probabilidadePeleNome("+tfPai.getText()+","+tfMae.getText()+",'moreno-escuro',X).").get("X"));
+						resposta.append("%\n");
+						resposta.append("Negro: ");
+						resposta.append(Query.oneSolution("probabilidadePeleNome("+tfPai.getText()+","+tfMae.getText()+",preto"+",X).").get("X"));
+						resposta.append("%\n");
+						//resposta.append(Query.oneSolution("probabilidadePeleTodos("+tfPai.getText()+","+tfMae.getText()+",X).").get("X"));
 						
 						//resposta.append(Query.oneSolution("teste(X).").get("X"));
 						areaResposta.setText(resposta.toString());
 					} else if(rdbtnOlhos.isSelected()){
+						resposta.append("castanho: ");
+						resposta.append(Query.oneSolution("probabilidadeOlhoNome("+tfPai.getText() +","+ tfMae.getText()+",'castanho'"+",X).").get("X"));
+						resposta.append("%\n");
+						resposta.append("verde: ");
+						resposta.append(Query.oneSolution("probabilidadeOlhoNome("+tfPai.getText()+","+tfMae.getText()+",'verde',X).").get("X"));
+						resposta.append("%\n");
+						resposta.append("azul: ");
+						resposta.append(Query.oneSolution("probabilidadeOlhoNome("+tfPai.getText()+","+tfMae.getText()+",'azul',X).").get("X"));
+						resposta.append("%\n");
 						
+						areaResposta.setText(resposta.toString());
 					} else {
 						JOptionPane.showMessageDialog(null, "Selecione uma opção");
 					}

@@ -7,3 +7,5 @@ pessoa('Tera',[['IB','IB'],[c,c,masculino],['BA','BA','GV','GV'],['A','A',b,b]])
 pessoa('Walir',[['IA','IA'],['C','C',masculino],['BM','BM','GV','GA'],['A','A','B',b]]).
 pessoa('Salem',[[i,i],[c,c,masculino],['BA','BA','GV','GA'],['A','A','B','B']]).
 pessoa('Moritaka Inuduka',[['IA','IA'],[c,c,masculino],['BM','BM','GV','GA'],['A',a,b,b]]).
+pessoa(daniel,[['IB',i],['C',c,masculino],['BA','BA','GV','GV'],['A',a,'B',b]]).
+pessoa(camila,[['IA','IB'],[c,c,feminino],['BM','BM','GA','GA'],['A',a,b,b]]).
