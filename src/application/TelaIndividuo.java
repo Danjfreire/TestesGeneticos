@@ -447,12 +447,12 @@ public class TelaIndividuo extends JFrame {
 		contentPane.add(btnCadastrar);
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(textNome.getText().isEmpty() || textField.getText().isEmpty() || textField_1.getText().isEmpty() || textField_2.getText().isEmpty() || textField_3.getText().isEmpty())
-					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
-				else{
+				//if(textNome.getText().isEmpty() || textField.getText().isEmpty() || textField_1.getText().isEmpty() || textField_2.getText().isEmpty() || textField_3.getText().isEmpty())
+					//JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+				//else{
 				inserirPessoaProlog();
 				dispose();
-				}
+				//}
 			}
 		});
 		
@@ -524,16 +524,13 @@ public class TelaIndividuo extends JFrame {
 	}
 	
 	private void inserirPessoaProlog(){
-		File temp = new File("");
-		String caminho =  temp.getAbsolutePath();
-		String definitivo = caminho.replace("\\", "\\\\");
-		String caminhoTXT = definitivo + "\\\\pessoas.txt";
 		String genes = "[" + "["+textField.getText()+"]" + "," + "["+textField_1.getText() +"]"+ "," +"["+ textField_2.getText()+"]" + "," +
 		"["+ textField_3.getText()+ "]"+ "]";
 		String proposicao = "pessoa('" + textNome.getText() + "'," + genes + ")";
 		String inserirPessoa = "inserirPessoa(" + proposicao +")";
 		System.out.println(inserirPessoa);		
 		Query q1 = new Query(inserirPessoa);
-		System.out.println( "consult " + (q1.hasSolution() ? "succeeded" : "failed"));
+		JOptionPane.showMessageDialog(null, String.valueOf(q1.hasSolution()));
+		//System.out.println( "consult " + (q1.hasSolution() ? "succeeded" : "failed"));
 	}
 }

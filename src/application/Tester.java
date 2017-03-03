@@ -25,8 +25,8 @@ public class Tester {
 		System.out.println( "consult " + (q1.hasSolution() ? "succeeded" : "failed"));
 		
 		//teste lista
-		String c = "teste(X)";
-		System.out.println(Query.oneSolution(c).get("X"));
+		//String c = "teste(X)";
+		//System.out.println(Query.oneSolution(c).get("X"));
 		
 		//TelaIndividuo t = new TelaIndividuo();
 		//t.setVisible(true);

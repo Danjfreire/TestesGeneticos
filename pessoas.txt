@@ -3,3 +3,5 @@ pessoa(wallace, [['IA','IA'],['C','c'],['BM','BM','GA','GV'],['a','a','B','B']])
 pessoa('Wallace',[['IA',i],[c,c,masculino],['BA','BA','GV','GA'],['A','A','B','B']]).
 pessoa('Ertane',[['IA',i],[c,c,masculino],['BA','BA','GV','GV'],['A','A','B',b]]).
 pessoa('Tera',[['IB','IB'],[c,c,masculino],['BA','BA','GV','GV'],['A','A',b,b]]).
+
+pessoa('Walir',[['IA','IA'],['C','C',masculino],['BM','BM','GV','GA'],['A','A','B',b]]).

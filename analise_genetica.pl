@@ -379,6 +379,7 @@ descendentes(Homem, Mulher, Descendentes, Nivel):-
 %insercao e consulta
 
 vazio('').
+vazio([]).
 
 inserirPessoa(pessoa(Nome,_)):-vazio(Nome),!,fail.
 inserirPessoa(pessoa(_,[Sangue|_])):-vazio(Sangue),!,fail.

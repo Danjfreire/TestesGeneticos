@@ -388,7 +388,7 @@ inserirPessoa(pessoa(_,[_,_,_,Pele])):-vazio(Pele),!,fail.
 inserirPessoa(pessoa(Nome, _)):- absolute_file_name('pessoas.txt',Destino),
 consult(Destino), pessoa(Nome, _) , write('Nome já cadastrado!'), !, fail.
 inserirPessoa(Pessoa):-absolute_file_name('pessoas.txt',Destino),
-tell(Destino),writeq(Pessoa),write('.'), write('\n'), told.
+append(Destino),writeq(Pessoa),write('.'), write('\n'), told.
 consultaPessoa(Nome, Genes):-absolute_file_name('pessoas.txt',Destino),
 consult(Destino), pessoa(Nome, Genes).
 
