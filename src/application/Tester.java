@@ -32,5 +32,7 @@ public class Tester {
 		//t.setVisible(true);
 		TelaTeste tela = new TelaTeste();
 		tela.setVisible(true);
+		//T t = new T();
+		//t.setVisible(true);
 	}
 }
