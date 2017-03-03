@@ -279,8 +279,14 @@ preArvore(Nivel, Pessoa, Arvore):-
 	preArvore(Nivel, Pais, SubArvore),
 	concatenarLista(Pais, SubArvore, Arvore).
 
-arvoreGenealogica(Pessoa, Arvore):- preArvore(4, [Pessoa], SubArvore), concatenarLista([Pessoa],SubArvore, Arvore1),
-	reverse(Arvore1,Arvore).
+gerarIdentificadoresArvore([_],[[individuo, 1]]).
+gerarIdentificadoresArvore([_|Individuos],[[individuo,X]|[[individuo, Z]|Indentificadores]] ):-
+	gerarIdentificadoresArvore(Individuos, [[individuo, Z]|Indentificadores]), X is Z + 1.
+
+arvoreGenealogica(Pessoa, Arvore, Nivel):- consultaPessoa(Pessoa,[S,[C1,C2,_],O,P]),
+	preArvore(Nivel, [[S,[C1,C2],O,P]], SubArvore), gerarIdentificadoresArvore(SubArvore, Ids),
+	concatenarLista(Ids,[[Pessoa]], Identificadores),concatenarLista([[S,[C1,C2],O,P]], SubArvore, ArvoreR),
+	reverse(ArvoreR,ArvoreI), concatenarLista([Identificadores],[ArvoreI], Arvore).
 
 %Descendentes até um nivel dado
 
