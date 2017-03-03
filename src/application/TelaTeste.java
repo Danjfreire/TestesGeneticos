@@ -188,6 +188,15 @@ public class TelaTeste extends JFrame {
 		panel.add(comboBox);
 		comboBox.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+				if(comboBox.getSelectedItem().equals("Compatibilidade")){
+					tfPai.setEditable(true);
+					tfMae.setEditable(true);
+					tfPessoa.setEditable(true);
+					rdbtnCalvicie.setEnabled(false);
+					rdbtnOlhos.setEnabled(false);
+					rdbtnPele.setEnabled(false);
+					rdbtnSangue.setEnabled(false);
+				}
 				if(comboBox.getSelectedItem().equals("Descendentes")){
 					tfPai.setEditable(true);
 					tfMae.setEditable(true);
@@ -231,19 +240,28 @@ public class TelaTeste extends JFrame {
 					if(tfPessoa.getText().isEmpty())
 						JOptionPane.showMessageDialog(null, "Preencha o campo 'Pessoa'");
 					else{
-						//resposta.append("RESULTADO\n\n");
-						//resposta.append(Query.oneSolution("").get("X"));
+						resposta.append("RESULTADO\n\n");
+						/*resposta.append(Query.oneSolution("arvoreGenealogica(Pessoa, Arvore):-"
+								+ " preArvore(4, [Pessoa], SubArvore), concatenarLista([Pessoa],SubArvore, "
+								+ "Arvore1),reverse(Arvore1,Arvore).").get("X"));*/
 					}
 						
 				} else if(comboBox.getSelectedItem().toString().equals("Descendentes")){
 					//usar tfMae.getText() e tfPai.getText()
 					if(tfMae.getText().isEmpty() || tfPai.getText().isEmpty())
 						JOptionPane.showMessageDialog(null, "Preencha os campos 'Pai' e 'Mãe'");
+					//resposta.append(Query.oneSolution("").get("X"));
 					
 				} else if(comboBox.getSelectedItem().toString().equals("Compatibilidade")){
 					//usar tfMae.getText() e tfPai.getText()
-					if(tfMae.getText().isEmpty() || tfPai.getText().isEmpty())
-						JOptionPane.showMessageDialog(null, "Preencha os campos 'Pai' e 'Mãe'");
+					if(tfMae.getText().isEmpty() || tfPai.getText().isEmpty()/* || tfPessoa.getText().isEmpty()*/)
+						JOptionPane.showMessageDialog(null, "Preencha todos os campos'");
+					else{
+						resposta.append("RESULTADO\n\n");
+						//resposta.append(Query.oneSolution("compatibilidade("+tfPai.getText()+", "+tfMae.getText()+
+						//		", "+tfPessoa.getText()+")."));
+						areaResposta.setText(resposta.toString());
+					}
 					
 				} else if(comboBox.getSelectedItem().toString().equals("Probabilidade")){
 					//usar tfMae.getText() e tfPai.getText()
@@ -260,7 +278,24 @@ public class TelaTeste extends JFrame {
 						String caminho = temp.getAbsolutePath();
 						String definitivo = caminho.replace("\\", "\\\\");
 						String caminhoTXT = definitivo + "\\\\pessoas.txt";
+						resposta.append("Branco: ");
+						
+						//ajeitar essas query => Estudar C:\Program Files\swipl\doc\packages\jpl\java_api
 						resposta.append(Query.oneSolution("probabilidadePeleNome('"+tfPai.getText()+"','"+tfMae.getText()+"'+'branco','"+caminhoTXT +"',X).").get("X"));
+						resposta.append("\n");
+						resposta.append("Moreno Claro: ");
+						resposta.append(Query.oneSolution("probabilidadePeleNome('"+tfPai.getText()+"','"+tfMae.getText()+"'+'moreno-claro','"+caminhoTXT +"',X).").get("X"));
+						resposta.append("\n");
+						resposta.append("Moreno: ");
+						resposta.append(Query.oneSolution("probabilidadePeleNome('"+tfPai.getText()+"','"+tfMae.getText()+"'+'moreno','"+caminhoTXT +"',X).").get("X"));
+						resposta.append("\n");
+						resposta.append("Moreno Escuro: ");
+						resposta.append(Query.oneSolution("probabilidadePeleNome('"+tfPai.getText()+"','"+tfMae.getText()+"'+'moreno-escuro','"+caminhoTXT +"',X).").get("X"));
+						resposta.append("\n");
+						resposta.append("Preto: ");
+						resposta.append(Query.oneSolution("probabilidadePeleNome('"+tfPai.getText()+"','"+tfMae.getText()+"'+'preto','"+caminhoTXT +"',X).").get("X"));
+						resposta.append("\n");
+						
 						//resposta.append(Query.oneSolution("teste(X).").get("X"));
 						areaResposta.setText(resposta.toString());
 					} else if(rdbtnOlhos.isSelected()){
