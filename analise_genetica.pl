@@ -393,6 +393,25 @@ append(Destino),writeq(Pessoa),write('.'), write('\n'), told.
 consultaPessoa(Nome, Genes):-absolute_file_name('pessoas.txt',Destino),
 consult(Destino), pessoa(Nome, Genes).
 
+%Compatibilidade
+
+genePossivel([Alelo1,_],[Alelo2,_],[Alelo1,Alelo2]).
+genePossivel([Alelo1,_],[_,Alelo2],[Alelo1,Alelo2]).
+genePossivel([_,Alelo1],[Alelo2,_],[Alelo1,Alelo2]).
+genePossivel([_,Alelo1],[_,Alelo2],[Alelo1,Alelo2]).
+genePossivel([Alelo1,_],[Alelo2,_],[Alelo2,Alelo1]).
+genePossivel([Alelo1,_],[_,Alelo2],[Alelo2,Alelo1]).
+genePossivel([_,Alelo1],[Alelo2,_],[Alelo2,Alelo1]).
+genePossivel([_,Alelo1],[_,Alelo2],[Alelo2,Alelo1]).
+
+compatibilidade(Pai, Mae, Filho):-
+consultaPessoa(Pai,[SangueP, [C1P,C2P,_],[O1P,O2P,O3P,O4P],[P1P,P2P,P3P,P4P]]),
+consultaPessoa(Mae,[SangueM, [C1M,C2M,_],[O1M,O2M,O3M,O4M],[P1M,P2M,P3M,P4M]]),
+consultaPessoa(Filho,[SangueF, [C1F,C2F,_],[O1F,O2F,O3F,O4F],[P1F,P2F,P3F,P4F]]),
+genePossivel(SangueP, SangueM, SangueF),genePossivel([C1P,C2P], [C1M,C2M], [C1F,C2F]),
+genePossivel([O1P,O2P],[O1M,O2M],[O1F,O2F]),genePossivel([O3P,O4P],[O3M,O4M],[O3F,O4F]),
+genePossivel([P1P,P2P],[P1M,P2M],[P1F,P2F]),genePossivel([P3P,P4P],[P3M,P4M],[P3F,P4F]).
+
 %testes
 teste([1,[2,[3]]]).
 
