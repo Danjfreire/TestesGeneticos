@@ -258,8 +258,11 @@ public class TelaTeste extends JFrame {
 						JOptionPane.showMessageDialog(null, "Preencha todos os campos'");
 					else{
 						resposta.append("RESULTADO\n\n");
-						//resposta.append(Query.oneSolution("compatibilidade("+tfPai.getText()+", "+tfMae.getText()+
-						//		", "+tfPessoa.getText()+")."));
+						if((Query.hasSolution("compatibilidade('"+tfPai.getText()+"', '"+tfMae.getText()+
+								"', '"+tfPessoa.getText()+"')."))){
+							resposta.append("Compativel");
+						}else
+							resposta.append("Incompatível");
 						areaResposta.setText(resposta.toString());
 					}
 					
