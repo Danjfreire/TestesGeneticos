@@ -1,6 +1,6 @@
-%Fenótipos e genótipos
+%FENÓTIPOS E GENÓTIPOS
 
-%tipoSanguineo(geneP, geneM, fenótipo)
+% tipoSanguineo(geneP, geneM, fenótipo) ->FATO tipoSanguineo,genótipos e fenótipo
 tipoSanguineo('IA', 'IA', 'A').
 tipoSanguineo('IA', 'i', 'A').
 tipoSanguineo('i', 'IA', 'A').
@@ -10,12 +10,14 @@ tipoSanguineo('i', 'IB', 'B').
 tipoSanguineo('IA', 'IB', 'AB').
 tipoSanguineo('IB', 'IA', 'AB').
 tipoSanguineo('i', 'i', 'O').
-
+%			  ->FATO idSangue, valores usados para gerar
+%			  aleatoriedade das variações de genes tipoSanguineo
 idSangue(1, 'IA').
 idSangue(2, 'IB').
 idSangue(3, 'i').
 
-%calvice(geneP, geneM, sexo, fenótipo)
+%calvice(geneP, geneM, sexo, fenótipo)		     ->FATO calvice,genótipos e
+%						     fenótipo
 calvice('C', 'C', 'masculino', 'sim').
 calvice('C', 'C', 'feminino', 'sim').
 calvice('C', 'c', 'masculino', 'sim').
@@ -24,12 +26,13 @@ calvice('C', 'c', 'feminino', 'não').
 calvice('c', 'C', 'feminino', 'não').
 calvice('c', 'c', 'masculino', 'não').
 calvice('c', 'c', 'feminino', 'não').
-
-
+%				    ->FATO idCalvice, valores usados para gerar
+%				    aleatoriedade das variações de genes
 idCalvice(1, 'c').
 idCalvice(2, 'C').
 
-%corOlho(geneP1, geneM1, geneP2, geneM2, fenótipo)
+% corOlho(geneP1, geneM1, geneP2, geneM2, fenótipo)
+%                                              ->FATO corOlho,genótipos e fenotipos
 corOlho('BM', _, _, _, 'castanho').
 corOlho(_, 'BM', _, _, 'castanho').
 corOlho('BA', 'BA', 'GV', _, 'verde').
@@ -38,11 +41,14 @@ corOlho('BA', 'BA', 'GA', 'GA', 'azul').
 
 idOlhoB(1, 'BM').
 idOlhoB(2, 'BA').
-
+%	       ->FATO idOlhoB/G, valores para gerar aleatoriedade das
+%	       variações de genes. B para a primeira metade e G para a
+%	       segunda.
 idOlhoG(1, 'GV').
 idOlhoG(2, 'GA').
 
-%corPele(geneP1, geneM1, geneP2, geneM2, fenótipo)
+% corPele(geneP1, geneM1, geneP2, geneM2, fenótipo)
+%				        ->FATO corPele,genótipos e fenótipo
 corPele('A', 'A', 'B', 'B', 'preto').
 corPele('A', 'A', 'B', 'b', 'moreno-escuro').
 corPele('A', 'A', 'b', 'B', 'moreno-escuro').
@@ -62,11 +68,12 @@ corPele('a', 'a', 'b', 'b', 'branco').
 
 idPeleA(1, 'A').
 idPeleA(2, 'a').
-
+%	       ->FATO idPeleA/B, valores para gerar aleatoriedade das
+%	       variações de genes. A para a primeira metade e B para a segunda.
 idPeleB(1, 'B').
 idPeleB(2, 'b').
 
-%Operacoes
+%OPERAÇÕES A PARTE
 
 removerTodos(Elem, [Elem], []).
 removerTodos(_, [Elem], [Elem]).
@@ -89,12 +96,15 @@ itemPorcentagem(Lista, [Elem], [[Elem,Z]]):-tamanhoLista(Lista,X), tamanhoListaE
 itemPorcentagem(Lista1, [Elem|Lista2], [[Elem,Z]|Lista]):-
 	tamanhoLista(Lista1,X), tamanhoListaEspecial(Lista1, Elem, Y),
 	Z is( Y/X)*100, itemPorcentagem(Lista1,  Lista2, Lista).
-
+%					       Confirmar se X é uma lista
 eLista(X):-var(X),!,fail.
 eLista([]).
 eLista([_|T]):-
 	eLista(T).
-
+% regra com em que Gene1 pode ser um ou mais genes(lista), Gene2 2 ou
+% mais genes(sempre lista). A última lista da regra é composta de
+% combinações de todos os membros de Gene1 com cada membro de Gene2,
+% tendo o mesmo tamanho que Gene2.
 combinacaoSimples(Gene1, [Gene2], [[Gene1,Gene2]]):- atom(Gene2), atom(Gene1).
 combinacaoSimples(Gene1, [Gene2], [[Gene1| Gene2]]):- eLista(Gene2), atom(Gene1).
 combinacaoSimples(Gene1, [Gene2], [Lista]):- atom(Gene2), eLista(Gene1),concatenarLista(Gene1, [Gene2], Lista).
@@ -109,11 +119,11 @@ combinacaoSimples(Gene1,[Gene2|ListaGenes],[Lista|ListaPares]):-
 combinacaoSimples(Gene1,[Gene2|ListaGenes],[Lista|ListaPares]):-
 	combinacaoSimples(Gene1, ListaGenes, ListaPares), eLista(Gene2),eLista(Gene1),
 	concatenarLista(Gene1, Gene2, Lista).
-
-concatenarLista([], Lista, Lista).
+%
+concatenarLista([], Lista, Lista).           %caso base final?
 concatenarLista([Cabeca|Lista1], Lista2, [Cabeca|Lista3]):-
 	concatenarLista(Lista1, Lista2, Lista3).
-
+%
 pareamentoGenes([Gene1], Lista, ListaPares ):-combinacaoSimples(Gene1, Lista, ListaPares).
 pareamentoGenes([Inicio|Gene1], Gene2, ListaG):-
 	combinacaoSimples(Inicio, Gene2, Simples),
@@ -130,7 +140,7 @@ tamanhoListaEspecial([Head|Tail], Head, Soma):-
 	tamanhoListaEspecial(Tail, Head, Soma1), Soma is Soma1 + 1.
 tamanhoListaEspecial([_|Tail], Head2, Soma):-
 	tamanhoListaEspecial(Tail, Head2, Soma1), /*Head1 =\= Head2,*/ Soma is Soma1 + 0.
-
+%'aleatorioX' usado para
 aleatorio2(Num):-
 	random(X), Y is X*10000, round(Y, Z), Num is (Z mod 2)+1.
 aleatorio3(Num):-
@@ -138,9 +148,12 @@ aleatorio3(Num):-
 aleatorio4(Num):-
 	random(X), Y is X*10000, round(Y, Z), Num is (Z mod 4)+1.
 
-%Tipo sangue
-
+%TIPO SANGUINEO
+%			    regra identifica combinações de 2 genes e seu fenótipo
 listaSangue([[X,Y]], [Fenotipo]):- tipoSanguineo(X, Y, Fenotipo).
+%			    regra para lista com 2 ou mais combinações
+%			    de pares de genes e uma outra lista com os
+%			    respectivos fenótipos dos pares da primeira lista
 listaSangue([[X,Y]|Lista1], [Fenotipo|Lista2]):-
 	listaSangue(Lista1, Lista2), tipoSanguineo(X, Y, Fenotipo).
 
