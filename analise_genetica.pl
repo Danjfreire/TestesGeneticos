@@ -75,6 +75,8 @@ idPeleB(2, 'b').
 
 %OPERAÇÕES A PARTE
 
+% regra para retornar na terceira entrada a lista da segunda sem
+% qualquer aparição do(s) elemento(s) da primeira entrada
 removerTodos(Elem, [Elem], []).
 removerTodos(_, [Elem], [Elem]).
 removerTodos(Elem, [Elem|Lista1], Lista2):-
