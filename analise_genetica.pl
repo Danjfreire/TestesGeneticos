@@ -2,18 +2,18 @@
 
 %tipoSanguineo(geneP, geneM, fenótipo)
 tipoSanguineo('IA', 'IA', 'A').
-tipoSanguineo('IA', 'i', 'A').
-tipoSanguineo('i', 'IA', 'A').
+tipoSanguineo('IA', 'ii', 'A').
+tipoSanguineo('ii', 'IA', 'A').
 tipoSanguineo('IB', 'IB', 'B').
-tipoSanguineo('IB', 'i', 'B').
-tipoSanguineo('i', 'IB', 'B').
+tipoSanguineo('IB', 'ii', 'B').
+tipoSanguineo('ii', 'IB', 'B').
 tipoSanguineo('IA', 'IB', 'AB').
 tipoSanguineo('IB', 'IA', 'AB').
-tipoSanguineo('i', 'i', 'O').
+tipoSanguineo('ii', 'ii', 'O').
 
 idSangue(1, 'IA').
 idSangue(2, 'IB').
-idSangue(3, 'i').
+idSangue(3, 'ii').
 
 %calvice(geneP, geneM, sexo, fenótipo)
 calvice('C', 'C', 'masculino', 'sim').
@@ -279,14 +279,16 @@ preArvore(Nivel, Pessoa, Arvore):-
 	preArvore(Nivel, Pais, SubArvore),
 	concatenarLista(Pais, SubArvore, Arvore).
 
-gerarIdentificadoresArvore([_],[[individuo, 1]]).
-gerarIdentificadoresArvore([_|Individuos],[[individuo,X]|[[individuo, Z]|Indentificadores]] ):-
-	gerarIdentificadoresArvore(Individuos, [[individuo, Z]|Indentificadores]), X is Z + 1.
+formarListaUnica([[[S1,S2],[C1,C2],[O1,O2,O3,O4],[P1,P2,P3,P4]]],[S1,S2,C1,C2,O1,O2,O3,O4,P1,P2,P3,P4]).
+formarListaUnica([[[S1,S2],[C1,C2],[O1,O2,O3,O4],[P1,P2,P3,P4]]|Individuos], ListaUnica):-
+	formarListaUnica(Individuos, Lista),
+	concatenarLista([S1,S2,C1,C2,O1,O2,O3,O4,P1,P2,P3,P4], Lista, ListaUnica).
 
-arvoreGenealogica(Pessoa, Arvore, Nivel):- consultaPessoa(Pessoa,[S,[C1,C2,_],O,P]),
-	preArvore(Nivel, [[S,[C1,C2],O,P]], SubArvore), gerarIdentificadoresArvore(SubArvore, Ids),
-	concatenarLista(Ids,[[Pessoa]], Identificadores),concatenarLista([[S,[C1,C2],O,P]], SubArvore, ArvoreR),
-	reverse(ArvoreR,ArvoreI), concatenarLista([Identificadores],[ArvoreI], Arvore).
+arvoreGenealogica(Pessoa, Arvore, Nivel):-
+	consultaPessoa(Pessoa,[[S1,S2],[C1,C2,_],[O1,O2,O3,O4],[P1,P2,P3,P4]]),
+	preArvore(Nivel, [[[S1,S2],[C1,C2],[O1,O2,O3,O4],[P1,P2,P3,P4]]], SubArvoreR),
+	reverse(SubArvoreR, SubArvore),concatenarLista([S1,S2,C1,C2,O1,O2,O3,O4,P1,P2,P3,P4], [Pessoa], Ultimo),
+	formarListaUnica(SubArvore, ListaUnica), concatenarLista(ListaUnica, Ultimo, Arvore).
 
 %Descendentes até um nivel dado
 

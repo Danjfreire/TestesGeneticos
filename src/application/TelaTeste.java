@@ -31,10 +31,12 @@ import javax.swing.UIManager;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Font;
+import java.awt.Toolkit;
 
 import org.jpl7.Atom;
 import org.jpl7.Query;
 import org.jpl7.Term;
+import org.jpl7.Util;
 
 public class TelaTeste extends JFrame {
 
@@ -66,11 +68,8 @@ public class TelaTeste extends JFrame {
 	public TelaTeste() {
 		setResizable(false);
 		setTitle("Projeto G\u00EAneses");
-
-		
-
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 600);
+		setBounds((int)((Toolkit.getDefaultToolkit().getScreenSize().getWidth() - 809)/2), (int)((Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 600)/2), 800, 600);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -97,8 +96,10 @@ public class TelaTeste extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 165, 554, 374);
 		contentPane.add(scrollPane);
+		
 
-		JTextPane areaResposta = new JTextPane();
+		JTextArea areaResposta = new JTextArea();
+		areaResposta.setFont(new Font("Courier New", Font.BOLD, 13));
 		scrollPane.setViewportView(areaResposta);
 		
 		ButtonGroup grupo = new ButtonGroup();
@@ -111,7 +112,7 @@ public class TelaTeste extends JFrame {
 		panel.setLayout(null);
 										
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(10, 182, 190, 126);
+		panel_1.setBounds(10, 182, 90, 126);
 		panel.add(panel_1);
 		panel_1.setBackground(Color.WHITE);
 		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Selecionar", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(199, 21, 133)));
@@ -228,22 +229,36 @@ public class TelaTeste extends JFrame {
 		});
 										
 		JButton btnExecutar = new JButton("Executar");
+		btnExecutar.setForeground(Color.WHITE);
 		btnExecutar.setBackground(new Color(199, 21, 133));
 		btnExecutar.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnExecutar.setBounds(10, 319, 190, 44);
 		panel.add(btnExecutar);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBackground(Color.WHITE);
+		panel_3.setBorder(new TitledBorder(null, "N\u00EDveis", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(199, 21, 133)));
+		panel_3.setBounds(110, 182, 90, 126);
+		panel.add(panel_3);
+		panel_3.setLayout(null);
+		
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setBounds(10, 21, 74, 20);
+		panel_3.add(comboBox_1);
+		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6"}));
 		btnExecutar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				StringBuffer resposta = new StringBuffer();
 				if(comboBox.getSelectedItem().toString().equals("\u00C1rvore")){
 					//usar tfPessoa.getText()
+					String r;
 					if(tfPessoa.getText().isEmpty())
 						JOptionPane.showMessageDialog(null, "Preencha o campo 'Pessoa'");
 					else{
-						resposta.append("RESULTADO\n\n");
-						/*resposta.append(Query.oneSolution("arvoreGenealogica(Pessoa, Arvore):-"
-								+ " preArvore(4, [Pessoa], SubArvore), concatenarLista([Pessoa],SubArvore, "
-								+ "Arvore1),reverse(Arvore1,Arvore).").get("X"));*/
+						resposta = gerarArvoreProlog("arvoreGenealogica('"+ tfPessoa.getText() +"', Arvore,"+ comboBox_1.getSelectedItem() +")");
+						areaResposta.setText(resposta.toString());
+						
+						//areaResposta.
 					}
 						
 				} else if(comboBox.getSelectedItem().toString().equals("Descendentes")){
@@ -351,6 +366,123 @@ public class TelaTeste extends JFrame {
 		contentPane.add(lblNewLabel);
 										
 	}
-
 	
+	private StringBuffer gerarArvoreProlog(String consulta){
+		System.out.println(consulta);
+		StringBuffer resposta = new StringBuffer();
+		Query q = new Query(consulta);
+		Term t = q.oneSolution().get("Arvore");
+	
+		System.out.println(t);
+		String[] elementos = Util.atomListToStringArray(t);
+		
+		int totalElem = elementos.length;
+		int fator = (totalElem + 11)/12;
+		
+		int nivelMax = (int)(Math.log(fator)/Math.log(2)+1e-10);
+		
+		int i = 1;
+		int numLinha = (elementos.length + 11) / 2;
+		int temp = numLinha / 2;
+		int j = 0;
+		
+		int espacos = 0;
+		int tabulacao = 0;
+		int espacoEntre =2;
+		int espacoPM =1;
+		int tm;
+		int pm;
+		int em;
+		int inicio = 0;
+		int numeroCasal = ((int)(Math.pow(2, nivelMax)) - 2)/2;
+		int f;
+		int contl;
+		
+		while(i < nivelMax){
+			tm = 0;
+			while(tm < (tabulacao + 6)){
+				resposta.append(" ");
+				tm++;
+			}
+			f = 0;
+			contl = (int)(Math.pow(2, (nivelMax - 1 - i)));
+			while(f < contl){
+				resposta.append("pai " + String.format("%02d", numeroCasal));
+				pm = 0;
+				while(pm < espacoPM + 12){
+					resposta.append(" ");
+					pm++;
+				}
+				resposta.append("mãe " + String.format("%02d", numeroCasal));
+				em = 0;
+				while(em < espacoEntre + 12){
+					resposta.append(" ");
+					em++;
+				}
+				numeroCasal--;
+				f++;
+			}
+			resposta.append("\n");
+			tm =0;
+			while(tm < tabulacao){
+				resposta.append(" ");
+				tm++;
+			}
+			while(j < numLinha){
+				if((j % 24 == 0) && (j != inicio)){
+					em = 0;
+					while(em < espacoEntre){
+						resposta.append(" ");
+						em++;
+					}
+				}
+				else if((j % 12 == 0) && (j != inicio)){
+					pm = 0;
+					while(pm < espacoPM){
+						resposta.append(" ");
+						pm++;
+					}
+				}
+				resposta.append(elementos[j]);
+				j++;
+			}
+			inicio = j;
+			
+			espacos = ((int)(Math.pow(2, (nivelMax-1)))*1)/2 + (((int)(Math.pow(2, (nivelMax-1)))/2)-1)*2 + 
+					(int)(Math.pow(2, (nivelMax-1))) * 18 - (((int)(Math.pow(2, (nivelMax -1)))/(int)(Math.pow(2,i))) * 18);
+			
+			resposta.append("\n");
+			tabulacao = tabulacao + (18 + espacoPM)/2;
+			espacoPM = espacoEntre + 18 + espacoPM;
+			if(i < (nivelMax -1))
+				espacoEntre = (espacos - 2*tabulacao) / (((int)(Math.pow(2, (nivelMax -1)))/(int)(Math.pow(2,i))) - 1);
+			
+			
+			resposta.append("\n");
+			numLinha = temp + numLinha;
+			temp = temp / 2;
+			i++;
+		}
+		tm = 0;
+		i = elementos.length - 1;
+		while(tm < (tabulacao - (elementos[i].length() - 18)/2)){
+			resposta.append(" ");
+			tm++;
+		}
+		resposta.append(elementos[i]);
+		resposta.append("\n");
+		tm = 0;
+		while(tm < tabulacao){
+			resposta.append(" ");
+			tm++;
+		}
+		while(j < numLinha){
+			resposta.append(elementos[j]);
+			j++;
+		}
+		resposta.append("\n");
+		resposta.append("\n");
+		
+		return resposta;
+	}
 }

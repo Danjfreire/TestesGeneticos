@@ -279,14 +279,16 @@ preArvore(Nivel, Pessoa, Arvore):-
 	preArvore(Nivel, Pais, SubArvore),
 	concatenarLista(Pais, SubArvore, Arvore).
 
-gerarIdentificadoresArvore([_],[[individuo, 1]]).
-gerarIdentificadoresArvore([_|Individuos],[[individuo,X]|[[individuo, Z]|Indentificadores]] ):-
-	gerarIdentificadoresArvore(Individuos, [[individuo, Z]|Indentificadores]), X is Z + 1.
+formarListaUnica([[[S1,S2],[C1,C2],[O1,O2,O3,O4],[P1,P2,P3,P4]]],[S1,S2,C1,C2,O1,O2,O3,O4,P1,P2,P3,P4]).
+formarListaUnica([[[S1,S2],[C1,C2],[O1,O2,O3,O4],[P1,P2,P3,P4]]|Individuos], ListaUnica):-
+	formarListaUnica(Individuos, Lista),
+	concatenarLista([S1,S2,C1,C2,O1,O2,O3,O4,P1,P2,P3,P4], Lista, ListaUnica).
 
-arvoreGenealogica(Pessoa, Arvore, Nivel):- consultaPessoa(Pessoa,[S,[C1,C2,_],O,P]),
-	preArvore(Nivel, [[S,[C1,C2],O,P]], SubArvore), gerarIdentificadoresArvore(SubArvore, Ids),
-	concatenarLista(Ids,[[Pessoa]], Identificadores),concatenarLista([[S,[C1,C2],O,P]], SubArvore, ArvoreR),
-	reverse(ArvoreR,ArvoreI), concatenarLista([Identificadores],[ArvoreI], Arvore).
+arvoreGenealogica(Pessoa, Arvore, Nivel):-
+	consultaPessoa(Pessoa,[[S1,S2],[C1,C2,_],[O1,O2,O3,O4],[P1,P2,P3,P4]]),
+	preArvore(Nivel, [[[S1,S2],[C1,C2],[O1,O2,O3,O4],[P1,P2,P3,P4]]], SubArvoreR),
+	reverse(SubArvoreR, SubArvore),concatenarLista([S1,S2,C1,C2,O1,O2,O3,O4,P1,P2,P3,P4], [Pessoa], Ultimo),
+	formarListaUnica(SubArvore, ListaUnica), concatenarLista(ListaUnica, Ultimo, Arvore).
 
 %Descendentes até um nivel dado
 

@@ -24,6 +24,8 @@ public class Tester {
 		//verirficacao da resposta
 		System.out.println( "consult " + (q1.hasSolution() ? "succeeded" : "failed"));
 		
+		
+		
 		//teste lista
 		//String c = "teste(X)";
 		//System.out.println(Query.oneSolution(c).get("X"));
