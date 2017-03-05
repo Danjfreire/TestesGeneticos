@@ -90,7 +90,8 @@ listaDiferente([Elem|Lista1], [Elem|Lista]):-
 	listaDiferente(Lista2,Lista).
 listaDiferente([Elem|Lista1], [Elem|Lista]):-
 	listaDiferente(Lista1,Lista).
-
+% regra que retorna a porcentagem(s?) Z de frequencia de Elem(segunda
+% entrada) em Lista
 itemPorcentagem(Lista, [Elem], [[Elem,Z]]):-tamanhoLista(Lista,X), tamanhoListaEspecial(Lista, Elem, Y),
 	Z is( Y/X)*100.
 itemPorcentagem(Lista1, [Elem|Lista2], [[Elem,Z]|Lista]):-
@@ -119,27 +120,33 @@ combinacaoSimples(Gene1,[Gene2|ListaGenes],[Lista|ListaPares]):-
 combinacaoSimples(Gene1,[Gene2|ListaGenes],[Lista|ListaPares]):-
 	combinacaoSimples(Gene1, ListaGenes, ListaPares), eLista(Gene2),eLista(Gene1),
 	concatenarLista(Gene1, Gene2, Lista).
-%
-concatenarLista([], Lista, Lista).
+%	  regra onde a terceira Lista é a concatenação da primeira com a
+%	  segunda
+concatenarLista([], Lista, Lista).           %caso base final?
 concatenarLista([Cabeca|Lista1], Lista2, [Cabeca|Lista3]):-
 	concatenarLista(Lista1, Lista2, Lista3).
-%
-pareamentoGenes([Gene1], Lista, ListaPares ):-combinacaoSimples(Gene1, Lista, ListaPares).
+
+%	regra para combinar cada gene da primeira lista com cada gene da
+%	segunda lista e retornar essas combinações em ListaPares
+pareamentoGenes([Gene1], Lista, ListaPares ):-combinacaoSimples(Gene1, Lista, ListaPares).%caso primeira lista seja uma lista de um gene(ou lista de listas)/caso final?
 pareamentoGenes([Inicio|Gene1], Gene2, ListaG):-
 	combinacaoSimples(Inicio, Gene2, Simples),
 	pareamentoGenes(Gene1, Gene2, Lista),
 	concatenarLista(Simples, Lista, ListaG).
-
+%    regra para retornar tamanho de lista
 tamanhoLista([], 0).
 tamanhoLista([_|Lista], Soma):-
 	tamanhoLista(Lista, Soma1), Soma is Soma1 + 1.
 
-tamanhoListaEspecial([Elem], Elem, 1 ).
+%    regra que conta quantos Elem(segunda entrada) existem na lista que
+%    é a primeira entrada [?] e retorna a quantidade na terceira entrada
+tamanhoListaEspecial([Elem], Elem, 1 ).   %valor inicio do contador
 tamanhoListaEspecial([_], _, 0)/*:- Elem1 =\= Elem2*/.
-tamanhoListaEspecial([Head|Tail], Head, Soma):-
+tamanhoListaEspecial([Head|Tail], Head, Soma):-         %caso proximo elemento seja igual
 	tamanhoListaEspecial(Tail, Head, Soma1), Soma is Soma1 + 1.
-tamanhoListaEspecial([_|Tail], Head2, Soma):-
+tamanhoListaEspecial([_|Tail], Head2, Soma):-           %caso proximo elemento seja diferente
 	tamanhoListaEspecial(Tail, Head2, Soma1), /*Head1 =\= Head2,*/ Soma is Soma1 + 0.
+
 %'aleatorioX' usado para
 aleatorio2(Num):-
 	random(X), Y is X*10000, round(Y, Z), Num is (Z mod 2)+1.
@@ -157,49 +164,70 @@ listaSangue([[X,Y]], [Fenotipo]):- tipoSanguineo(X, Y, Fenotipo).
 listaSangue([[X,Y]|Lista1], [Fenotipo|Lista2]):-
 	listaSangue(Lista1, Lista2), tipoSanguineo(X, Y, Fenotipo).
 
+%		       regra combina os gene(s) de GeneP e GeneM em
+%		       pares e retorna em Tipos uma lista dos fenótipos
+%		       identificados por esses pares
 retornaFenotipoSanguineo(GeneP, GeneM, Tipos):-
 	pareamentoGenes(GeneP, GeneM, Lista2), listaSangue(Lista2, Tipos).
 
+%		       regra que baseado nos gene(s) GeneP e GeneM
+%		       e no tipo sanguineo em Fenotipo retorna sua
+%		       chance em Percentual
 probabilidadeSanguineo(GeneP, GeneM, Fenotipo, Percentual):-
 	retornaFenotipoSanguineo(GeneP, GeneM, Lista), tamanhoLista(Lista, Tamanho1),
 	tamanhoListaEspecial(Lista, Fenotipo, Tamanho2), Percentual is (Tamanho2 * 100) / Tamanho1.
-
+%		       regra para gerar uma combinação aleatoria para
+%		       cada um dos 2 alelos de um gene de uma pessoa
 gerarGeneSangue([Alelo1,Alelo2], [[Alelo1, X],[Alelo2, Y]]):-
 	aleatorio3(Num1), idSangue(Num1, X),
 	aleatorio3(Num2), idSangue(Num2, Y).
-
+%		       mesmo que probabilidadeSanguineo mas utilizando
+%		       pessoas cadastradas
 probabilidadeSangueNome(Pai, Mae, Fenotipo, Percentual):-
 	consultaPessoa(Pai, [Gene1|_]), consultaPessoa(Mae, [Gene2|_]),
 	probabilidadeSanguineo(Gene1, Gene2, Fenotipo, Percentual).
-
+%		      mesmo que o de cima, mas sem informar Fenotipo,
+%		      retorna Lista com
 probabilidadeSangueTodos(Pai, Mae, Lista):-
 	consultaPessoa(Pai, [Gene1|_]), consultaPessoa(Mae, [Gene2|_]),
 	retornaFenotipoSanguineo(Gene1, Gene2, Tipos), itemPorcentagem(Tipos, Tipos, Lista1),
 	listaDiferente(Lista1,Lista).
 
-%Tipo calvice
+%PRESENÇA DE CALVICIE
 
+%		      regra para identificar o fenotipo baseado numa
+%		      lista com 2 genes e Z=sexo
 listaCalvice([[X,Y,Z]], [Fenotipo]):- calvice(X,Y,Z, Fenotipo).
+%		      regra para lista com listas de 2 genes e sexo que
+%		      retorna lista de fenotipos para cada lista de
+%		      genes e sexo.
 listaCalvice([[X,Y,Z]|Lista1],[Fenotipo|Lista2]):-
 	listaCalvice(Lista1, Lista2), calvice(X,Y,Z, Fenotipo).
-
+%		      regra para combinar cada gene(s) de GeneP e GeneM,
+%		      e cada par combinado com um sexo, para então
+%		      retornar uma Lista de fenótipos correspondetes
 retornaFenotipoCalvice(GeneP, GeneM, Lista):-
 	pareamentoGenes(GeneP, GeneM, Lista1),
 	pareamentoGenes(Lista1, ['masculino','feminino'], Lista2),
 	listaCalvice(Lista2, Lista).
-
+%		      regra que retorna em Percentual a chance do
+%		      Fenotipo dado aparecer baseado nos genes de GeneP
+%		      e GeneM
 probabilidadeCalvice(GeneP, GeneM, Fenotipo, Percentual):-
 	retornaFenotipoCalvice(GeneP, GeneM, Lista), tamanhoLista(Lista, Tamanho1),
 	tamanhoListaEspecial(Lista, Fenotipo, Tamanho2), Percentual is (Tamanho2 * 100) / Tamanho1.
-
+%		      regra que gera 2 combinações aleatórias de alelos
+%		      sendo 1 alelo dessas duas combinações da
+%		      combinação original na primeira entrada
 gerarGeneCalvice([Alelo1,Alelo2], [[Alelo1, X],[Alelo2, Y]]):-
 	aleatorio2(Num1), idCalvice(Num1, X),
 	aleatorio2(Num2), idCalvice(Num2, Y).
-
+%		      regra identica a probabilidadeCalvice, mas
+%		      funciona baseado em pessoas cadastradas
 probabilidadeCalvicieNome(Pai, Mae, Fenotipo, Percentual):-
 	consultaPessoa(Pai, [_,[G1,G2,_]|_]), consultaPessoa(Mae, [_,[G3,G4,_]|_]),
 	probabilidadeCalvice([G1,G2],[G3,G4], Fenotipo, Percentual).
-
+%
 probabilidadeCalvicieTodos(Pai, Mae, Lista):-
 	consultaPessoa(Pai, [_,[G1,G2,_]|_]), consultaPessoa(Mae, [_,[G3,G4,_]|_]),
 	retornaFenotipoCalvice([G1,G2], [G3,G4], Lista1), itemPorcentagem(Lista1, Lista1, Lista2),
