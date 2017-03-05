@@ -64,6 +64,7 @@ public class TelaIndividuo extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaIndividuo() {
+		setResizable(false);
 		setTitle("Novo Indiv\u00EDduo");
 		setBackground(Color.WHITE);
 		setBounds((int)((Toolkit.getDefaultToolkit().getScreenSize().getWidth() - 460)/2), (int)((Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 521)/2), 460, 521);
@@ -88,7 +89,7 @@ public class TelaIndividuo extends JFrame {
 		});
 		mnTipoA.add(mntmiaia);
 		
-		JMenuItem mntmiai = new JMenuItem("'IA','i'");
+		JMenuItem mntmiai = new JMenuItem("'IA','ii'");
 		mntmiai.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				textField.setEditable(true);
@@ -111,7 +112,7 @@ public class TelaIndividuo extends JFrame {
 		});
 		mnTipoB.add(mntmibib);
 		
-		JMenuItem mntmibi = new JMenuItem("'IB','i'");
+		JMenuItem mntmibi = new JMenuItem("'IB','ii'");
 		mntmibi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				textField.setEditable(true);
@@ -137,7 +138,7 @@ public class TelaIndividuo extends JFrame {
 		JMenu mnTipoO = new JMenu("Tipo O");
 		mnSangue.add(mnTipoO);
 		
-		JMenuItem mntmii = new JMenuItem("'i','i'");
+		JMenuItem mntmii = new JMenuItem("'ii','ii'");
 		mntmii.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				textField.setEditable(true);
@@ -442,6 +443,8 @@ public class TelaIndividuo extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.setForeground(Color.WHITE);
+		btnCadastrar.setBackground(new Color(199, 21, 133));
 		btnCadastrar.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnCadastrar.setBounds(153, 384, 143, 42);
 		contentPane.add(btnCadastrar);
