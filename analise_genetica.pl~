@@ -33,7 +33,7 @@ idCalvice(1, 'c').
 idCalvice(2, 'C').
 
 % corOlho(geneP1, geneM1, geneP2, geneM2, fenótipo)
-%                                              ->FATO corOlho,genótipos e fenotipos
+%				    ->FATO corOlho,genótipos e fenotipos
 corOlho('BM', _, _, _, 'castanho').
 corOlho(_, 'BM', _, _, 'castanho').
 corOlho('BA', 'BA', 'GV', _, 'verde').
@@ -85,8 +85,10 @@ removerTodos(Elem, [Elem|Lista1], Lista2):-
 removerTodos(Elem1, [Elem2|Lista1], [Elem2|Lista2]):-
 	removerTodos(Elem1, Lista1, Lista2).
 
-%listaDiferente([Elem,Elem],[Elem]).
-%listaDiferente([Elem1,Elem2], [Elem1,Elem2]).
+% regra onde a segunda lista é feita a partir dos elementos da primeira
+% mas sem nenhuma repetição
+% listaDiferente([Elem,Elem],[Elem]).
+% listaDiferente([Elem1,Elem2], [Elem1,Elem2]).
 listaDiferente([],[]).
 listaDiferente([Elem|Lista1], [Elem|Lista]):-
 	member(Elem, Lista1), removerTodos(Elem, Lista1, Lista2),
@@ -150,7 +152,7 @@ tamanhoListaEspecial([Head|Tail], Head, Soma):-         %caso proximo elemento s
 tamanhoListaEspecial([_|Tail], Head2, Soma):-           %caso proximo elemento seja diferente
 	tamanhoListaEspecial(Tail, Head2, Soma1), /*Head1 =\= Head2,*/ Soma is Soma1 + 0.
 
-%'aleatorioX' usado para
+%'aleatorioX' usado para gerar número aleatório de 0 à X
 aleatorio2(Num):-
 	random(X), Y is X*10000, round(Y, Z), Num is (Z mod 2)+1.
 aleatorio3(Num):-
@@ -189,8 +191,9 @@ gerarGeneSangue([Alelo1,Alelo2], [[Alelo1, X],[Alelo2, Y]]):-
 probabilidadeSangueNome(Pai, Mae, Fenotipo, Percentual):-
 	consultaPessoa(Pai, [Gene1|_]), consultaPessoa(Mae, [Gene2|_]),
 	probabilidadeSanguineo(Gene1, Gene2, Fenotipo, Percentual).
-%		      mesmo que o de cima, mas sem informar Fenotipo,
-%		      retorna Lista com
+%		      regra que retorna Lista (sem repetições) de cada
+%		      fenótipo(tipo sanguineo)e suas porcentagens de
+%		      acontecimento baseado em Pai e Mae
 probabilidadeSangueTodos(Pai, Mae, Lista):-
 	consultaPessoa(Pai, [Gene1|_]), consultaPessoa(Mae, [Gene2|_]),
 	retornaFenotipoSanguineo(Gene1, Gene2, Tipos), itemPorcentagem(Tipos, Tipos, Lista1),
@@ -230,7 +233,9 @@ gerarGeneCalvice([Alelo1,Alelo2], [[Alelo1, X],[Alelo2, Y]]):-
 probabilidadeCalvicieNome(Pai, Mae, Fenotipo, Percentual):-
 	consultaPessoa(Pai, [_,[G1,G2,_]|_]), consultaPessoa(Mae, [_,[G3,G4,_]|_]),
 	probabilidadeCalvice([G1,G2],[G3,G4], Fenotipo, Percentual).
-%
+%		      regra que retorna Lista (sem repetições) de cada
+%		      fenótipo(calvo ou não) e suas porcentagens de
+%		      acontecimento baseado em Pai e Mae
 probabilidadeCalvicieTodos(Pai, Mae, Lista):-
 	consultaPessoa(Pai, [_,[G1,G2,_]|_]), consultaPessoa(Mae, [_,[G3,G4,_]|_]),
 	retornaFenotipoCalvice([G1,G2], [G3,G4], Lista1), itemPorcentagem(Lista1, Lista1, Lista2),
@@ -298,8 +303,10 @@ probabilidadePeleTodos(Pai, Mae, Lista):-
 	retornaFenotipoPele([P1,P2],[P3,P4],[P5,P6],[P7,P8], Lista1), itemPorcentagem(Lista1, Lista1, Lista2),
 	listaDiferente(Lista2, Lista).
 
-%Arvore genealogica
+%ARVORE GENEALOGICA
 
+%		      regra para gerar combinações de genes(pai e mãe)
+%		      baseado nas combinações das 4 primeiras listas
 pai_mae([[S1,S2],[C1,C2],[B1,B2,G1,G2],[A1,A2,P1,P2]],[[PS, PC, OlhoP, PeleP],[MS,MC,OlhoM,PeleM]]):-
 	gerarGeneSangue([S1,S2], [PS, MS]),
 	gerarGeneCalvice([C1,C2], [PC, MC]),
@@ -310,24 +317,34 @@ pai_mae([[S1,S2],[C1,C2],[B1,B2,G1,G2],[A1,A2,P1,P2]],[[PS, PC, OlhoP, PeleP],[M
 	concatenarLista(Pe1,Pe2, PeleP),
 	concatenarLista(Pe3,Pe4, PeleM).
 
+%		      regra que baseado numa lista de 1 ou mais
+%		      Individuo(s), gera uma lista Pais com os possíveis
+%		      genes geradores gerados por pai_mae
 gerarPais([Individuo], Pais):- pai_mae(Individuo, Pais).
 gerarPais([Individuo|Individuos], Pais):-
 	gerarPais(Individuos, PM2),
 	pai_mae(Individuo, PM1),
 	concatenarLista(PM1,PM2, Pais).
-
+%		      regra onde na terceira entrada Arvore retorna uma
+%		      lista com combinações de genes geradas a partir de
+%		      gerarPais baseado na lista de um ou mais Filhos. A
+%		      quantidade gerada depende do valor  Nivel
 preArvore(Nivel, Filhos, Arvore):- tamanhoLista(Filhos, X),  Y is 2^(Nivel - 1),
 	Y = X, gerarPais(Filhos, Arvore).
 preArvore(Nivel, Pessoa, Arvore):-
 	gerarPais(Pessoa, Pais),
 	preArvore(Nivel, Pais, SubArvore),
 	concatenarLista(Pais, SubArvore, Arvore).
-
+%		      regra para concatenar listas com listas de genes
+%		      de individuos em uma unica lista com listas onde
+%		      cada uma representa todos os genes de um individuo
 formarListaUnica([[[S1,S2],[C1,C2],[O1,O2,O3,O4],[P1,P2,P3,P4]]],[S1,S2,C1,C2,O1,O2,O3,O4,P1,P2,P3,P4]).
 formarListaUnica([[[S1,S2],[C1,C2],[O1,O2,O3,O4],[P1,P2,P3,P4]]|Individuos], ListaUnica):-
 	formarListaUnica(Individuos, Lista),
 	concatenarLista([S1,S2,C1,C2,O1,O2,O3,O4,P1,P2,P3,P4], Lista, ListaUnica).
-
+%		      regra que utilizando de preArvore gera uma lista
+%		      Arvore baseada numa Pessoa cadastrada e seus
+%		      genes.
 arvoreGenealogica(Pessoa, Arvore, Nivel):-
 	consultaPessoa(Pessoa,[[S1,S2],[C1,C2,_],[O1,O2,O3,O4],[P1,P2,P3,P4]]),
 	preArvore(Nivel, [[[S1,S2],[C1,C2],[O1,O2,O3,O4],[P1,P2,P3,P4]]], SubArvoreR),
@@ -336,11 +353,19 @@ arvoreGenealogica(Pessoa, Arvore, Nivel):-
 
 %Descendentes até um nivel dado
 
+%		      regra que retorna uma combinação de alelos na
+%		      terceira entrada baseado nas outras duas primeiras
+%		      combinações. O valor Z determina quais serão esses
+%		      alelos.
 geneFilho([Alelo1,_], [Alelo2, _], [Alelo1,Alelo2], Z):- Z = 1.
 geneFilho([Alelo1,_], [_, Alelo2], [Alelo1,Alelo2], Z):- Z = 2.
 geneFilho([_,Alelo1], [Alelo2, _], [Alelo1,Alelo2], Z):- Z = 3.
 geneFilho([_,Alelo1], [_, Alelo2], [Alelo1,Alelo2], Z):- Z = 4.
-
+%		      regra para gerar genes filho a partir de
+%		      diferentes combinações de genes (pai e mãe)
+%		      selecionando quais genes serão herdades
+%		      aleatoriamente. Essas combinações geradas são
+%		      especificas para calvicie dominante (homem)
 gerarFilho([[PS1, PS2],[PC1,PC2, 'masculino'],[PO1,PO2,PO3,PO4],[PL1,PL2,PL3,PL4]],
 	   [[MS1, MS2],[MC1,MC2, 'feminino'],[MO1,MO2,MO3,MO4],[ML1,ML2,ML3,ML4]],
 	   [[Sangue, [CA, CB, 'masculino'], [O1,O2,O3,O4], [P1,P2,P3,P4]],
@@ -352,7 +377,8 @@ gerarFilho([[PS1, PS2],[PC1,PC2, 'masculino'],[PO1,PO2,PO3,PO4],[PL1,PL2,PL3,PL4
 	aleatorio4(D), geneFilho([PO3,PO4],[MO3,MO4], [O3,O4], D),
 	aleatorio4(E), geneFilho([PL1,PL2],[ML1,ML2], [P1,P2], E),
 	aleatorio4(F), geneFilho([PL3,PL4],[ML3,ML4], [P3,P4], F).
-
+%		      regra identica a de cima mas as combinações são
+%		      baseadas na calvicie recessiva (mulher)
 gerarFilha([[PS1, PS2],[PC1,PC2, 'masculino'],[PO1,PO2,PO3,PO4],[PL1,PL2,PL3,PL4]],
 	   [[MS1, MS2],[MC1,MC2, 'feminino'],[MO1,MO2,MO3,MO4],[ML1,ML2,ML3,ML4]],
 	   [[Sangue, [CA, CB, 'feminino'], [O1,O2,O3,O4], [P1,P2,P3,P4]],
@@ -364,36 +390,48 @@ gerarFilha([[PS1, PS2],[PC1,PC2, 'masculino'],[PO1,PO2,PO3,PO4],[PL1,PL2,PL3,PL4
 	aleatorio4(D), geneFilho([PO3,PO4],[MO3,MO4], [O3,O4], D),
 	aleatorio4(E), geneFilho([PL1,PL2],[ML1,ML2], [P1,P2], E),
 	aleatorio4(F), geneFilho([PL3,PL4],[ML3,ML4], [P3,P4], F).
-
+%		      regra para gerar lista de Filho(s) baseado em Pai,
+%		      Mae e Quantidade
 listaFilhos(Pai, Mae, Quantidade, [Filho]):- Quantidade = 1, gerarFilho(Pai, Mae, Filho).
 listaFilhos(Pai, Mae, Quantidade, [Filho|Filhos]):-
 	Resto is Quantidade - 1, listaFilhos(Pai, Mae, Resto, Filhos),
 	gerarFilho(Pai, Mae, Filho).
-
+%		      regra para gerar lista de Filha(s) baseado em Pai,
+%		      Mae e Quantidade
 listaFilhas(Pai, Mae, Quantidade, [Filha]):- Quantidade = 1, gerarFilha(Pai, Mae, Filha).
 listaFilhas(Pai, Mae, Quantidade, [Filha|Filhas]):-
 	Resto is Quantidade - 1, listaFilhas(Pai, Mae, Resto, Filhas),
 	gerarFilha(Pai, Mae, Filha).
-
+%		      regra que retorna na segunda entrada a mesma lista
+%		      que na primeira mas sem o seu ultimo elemento
 tiraUlt([_],[]).
 tiraUlt([Cabeca|Cauda], [Cabeca|Lista]):-
 	tiraUlt(Cauda, Lista).
-
+%		      regra que retorna na terceira entrada uma Lista
+%		      cópia da primeira mas sem o elemento dado no
+%		      índice informado na segunda entrada.
 removerLista(Lista1, 1, Lista2):- tiraUlt(Lista1, Lista2).
 removerLista([_|Lista], Num1, Lista):- tamanhoLista([_|Lista], Num2), Num1 = Num2.
 removerLista([Head1|Cauda1], Indice, [Head1|Cauda2]):-
 	removerLista(Cauda1, Indice, Cauda2).
-
+%		      regra que retorna na segunda entrada o ultimo
+%		      elemento da lista.
 retornaUlt([Ultimo], Ultimo).
 retornaUlt([_|Cauda], Ultimo):-
 	retornaUlt(Cauda, Ultimo).
-
+%		      regra que retorna na terceira entrada um Elemento
+%		      no dado índice da Lista informado na primeira
+%		      entrada
 pegarLista(Lista, 1, Elemento):- retornaUlt(Lista, Elemento).
 pegarLista([Cabeca|Cauda], Indice, Cabeca):-
 	tamanhoLista([Cabeca|Cauda], X), Indice = X.
 pegarLista([_|Cauda], Indice, Elemento):-
 	pegarLista(Cauda, Indice, Elemento).
-
+%		      regra recebe duas listas de individuos (Homens,
+%		      Mulheres) e forma Casais(lista) com um Homem e uma
+%		      Mulher aleatórios dessas listas ao mesmo tempo que
+%		      os vão removendo delas. Para se sobrar
+%		      homem/mulher.
 formarCasais([], _, []).
 formarCasais(_, [], []).
 formarCasais(Homens, Mulheres, [[Homem, Mulher]|Casais]):-
@@ -406,7 +444,10 @@ formarCasais(Homens, Mulheres, [[Homem, Mulher]|Casais]):-
 	pegarLista(Mulheres, E, Mulher),
 	removerLista(Mulheres, E, Mulheres1),
 	formarCasais(Homens1, Mulheres1, Casais),!.
-
+%		      regra que gera uma lista com duas listas, uma para
+%		      Filhos e outra para Filhas, baseados nos
+%		      individuos Homem e Mulher. A quantidade de filh@s
+%		      é aleatória para cada Homem com cada Mulher.
 filhosCasais([[[Homem,_],[Mulher,_]]],[Filhos,Filhas]):-
 	aleatorio2(X), listaFilhos(Homem, Mulher, X, Filhos),
 	listaFilhas(Homem, Mulher, X, Filhas).
@@ -416,23 +457,31 @@ filhosCasais([[[Homem,_], [Mulher,_]]|Casais], [Filhos, Filhas]):-
 	filhosCasais(Casais, [Filhos2, Filhas2]),
 	concatenarLista(Filhos1, Filhos2, Filhos),
 	concatenarLista(Filhas1, Filhas2, Filhas).
-
+%		      regra recebe lista(com listas) de Casais na
+%		      primeira entrada e retorna lista com lista de
+%		      filhos/netos/bisnetos/etc Descendentes gerados
+%		      aleatoriamente de filhosCasais e organizados em
+%		      casais com formarCasais (incesto?). Quantidade
+%		      baseada na terceira entrada Nivel.
 preDescendentes(Casais, [Descendentes], 1):- filhosCasais(Casais, Descendentes).
 preDescendentes(Casal, [Casais|Descendentes], Nivel):-
 	filhosCasais(Casal,[Filhos,Filhas]),
 	formarCasais(Filhos, Filhas, Casais),
 	Resto is Nivel - 1,
 	preDescendentes(Casais, Descendentes, Resto).
-
+%		      regra similar a anterior mas inserindo Homem e
+%		      Mulher em entradas separadas.
 descendentes(Homem, Mulher, Descendentes, Nivel):-
 	preDescendentes([[[Homem,_], [Mulher,_]]], Descendentes, Nivel).
 
 
-%insercao e consulta
-
+%INSERÇÃO E CONSULTA
+% verificar se string ou lista é vazia
 vazio('').
 vazio([]).
-
+%		      regra para cadastrar uma pessoa no arquivo
+%		      pessoas.txt baseado nos dados passados pelo
+%		      programa em Java
 inserirPessoa(pessoa(Nome,_)):-vazio(Nome),!,fail.
 inserirPessoa(pessoa(_,[Sangue|_])):-vazio(Sangue),!,fail.
 inserirPessoa(pessoa(_,[_,Calvicie|_])):-vazio(Calvicie),!,fail.
@@ -445,8 +494,10 @@ append(Destino),writeq(Pessoa),write('.'), write('\n'), told.
 consultaPessoa(Nome, Genes):-absolute_file_name('pessoas.txt',Destino),
 consult(Destino), pessoa(Nome, Genes).
 
-%Compatibilidade
-
+%COMPATIBILIDADE
+%		      regra para verificar se uma combinação de
+%		      alelos(terceira entrada) pode ter sido
+%		      gerada das outras duas primeiras combinações
 genePossivel([Alelo1,_],[Alelo2,_],[Alelo1,Alelo2]).
 genePossivel([Alelo1,_],[_,Alelo2],[Alelo1,Alelo2]).
 genePossivel([_,Alelo1],[Alelo2,_],[Alelo1,Alelo2]).
@@ -455,7 +506,9 @@ genePossivel([Alelo1,_],[Alelo2,_],[Alelo2,Alelo1]).
 genePossivel([Alelo1,_],[_,Alelo2],[Alelo2,Alelo1]).
 genePossivel([_,Alelo1],[Alelo2,_],[Alelo2,Alelo1]).
 genePossivel([_,Alelo1],[_,Alelo2],[Alelo2,Alelo1]).
-
+%		      regra que baseado em cada combinação de genes de
+%		      Pai, Mae e Filho verifica se os genes de Pai e Mae
+%		      poderiam ter gerados os genes de Filho
 compatibilidade(Pai, Mae, Filho):-
 consultaPessoa(Pai,[SangueP, [C1P,C2P,_],[O1P,O2P,O3P,O4P],[P1P,P2P,P3P,P4P]]),
 consultaPessoa(Mae,[SangueM, [C1M,C2M,_],[O1M,O2M,O3M,O4M],[P1M,P2M,P3M,P4M]]),

@@ -8,7 +8,8 @@ pessoa('Walir',[['IA','IA'],['C','C',masculino],['BM','BM','GV','GA'],['A','A','
 pessoa('Salem',[[ii,ii],[c,c,masculino],['BA','BA','GV','GA'],['A','A','B','B']]).
 pessoa('Moritaka Inuduka',[['IA','IA'],[c,c,masculino],['BM','BM','GV','GA'],['A',a,b,b]]).
 pessoa(daniel,[['IB',ii],['C',c,masculino],['BA','BA','GV','GV'],['A',a,'B',b]]).
-pessoa(camila,[['IA','IB'],['c','c',feminino],['BM','BM','GA','GA'],['A',a,b,b]]).pessoa(mae,[['IA','IA'],[c,c,masculino],['BM','BM','GV','GV'],['A','A',b,b]]).
+pessoa(camila,[['IA','IB'],['c','c',feminino],['BM','BM','GA','GA'],['A',a,b,b]]).
+pessoa(mae,[['IA','IA'],[c,c,masculino],['BM','BM','GV','GV'],['A','A',b,b]]).
 pessoa(filho,[['IA','IA'],[c,c,masculino],['BM','BM','GV','GV'],['A','A',b,b]]).
 pessoa(pai,[['IA','IA'],[c,c,masculino],['BM','BM','GV','GV'],['A','A',b,b]]).
 pessoa(teste,[['IB','IB'],[c,c,masculino],['BM','BM','GA','GA'],[a,a,'B',b]]).
