@@ -243,7 +243,10 @@ probabilidadeCalvicieTodos(Pai, Mae, Lista):-
 
 %TIPO OLHO
 
-%
+%		      regra que recebe uma lista de listas com
+%		      combinações de genes na primeira entrada e retorna
+%		      na segunda uma lista com os Fenotipo(s)
+%		      correspondentes.
 listaOlho([[W,X,Y,Z]], [Fenotipo]):- corOlho(W,X,Y,Z, Fenotipo).
 listaOlho([[W,X,Y,Z]|Lista1], [Fenotipo|Lista2]):-
 	listaOlho(Lista1, Lista2), corOlho(W,X,Y,Z, Fenotipo).

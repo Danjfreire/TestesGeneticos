@@ -241,8 +241,9 @@ probabilidadeCalvicieTodos(Pai, Mae, Lista):-
 	retornaFenotipoCalvice([G1,G2], [G3,G4], Lista1), itemPorcentagem(Lista1, Lista1, Lista2),
 	listaDiferente(Lista2, Lista).
 
-%Tipo olho
+%TIPO OLHO
 
+%
 listaOlho([[W,X,Y,Z]], [Fenotipo]):- corOlho(W,X,Y,Z, Fenotipo).
 listaOlho([[W,X,Y,Z]|Lista1], [Fenotipo|Lista2]):-
 	listaOlho(Lista1, Lista2), corOlho(W,X,Y,Z, Fenotipo).
@@ -272,7 +273,7 @@ probabilidadeOlhoTodos(Pai, Mae, Lista):-
 	retornaFenotipoOlho([O1,O2],[O3,O4],[O5,O6],[O7,O8],Lista1), itemPorcentagem(Lista1, Lista1, Lista2),
 	listaDiferente(Lista2,Lista).
 
-%Tipo pele
+%TIPO PELE
 
 listaPele([[W,X,Y,Z]], [Fenotipo]):- corPele(W,X,Y,Z, Fenotipo).
 listaPele([[W,X,Y,Z]|Lista1], [Fenotipo|Lista2]):-
