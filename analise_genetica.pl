@@ -155,9 +155,14 @@ gerarGeneSangue([Alelo1,Alelo2], [[Alelo1, X],[Alelo2, Y]]):-
 	aleatorio3(Num1), idSangue(Num1, X),
 	aleatorio3(Num2), idSangue(Num2, Y).
 
-probabilidadeSangueNome(Pai, Mae, Fenotipo, Percentual):-
-	consultaPessoa(Pai, [Gene1|_]), consultaPessoa(Mae, [Gene2|_]),
+probabilidadeSangueNome(Pai, Mae, Fenotipo, Percentual, _, _):-
+	consultaPessoa(Pai, [Gene1,[_,_,masculino]|_]), consultaPessoa(Mae, [Gene2,[_,_,feminino]|_]),
 	probabilidadeSanguineo(Gene1, Gene2, Fenotipo, Percentual).
+probabilidadeSangueNome(Homem,_,_,_,Resposta, Id):- consultaPessoa(Homem, [_,[_,_,feminino],_,_]), sexoPai(Resposta, Id),!.
+probabilidadeSangueNome(_,Mulher,_,_,Resposta, Id):- consultaPessoa(Mulher, [_,[_,_,masculino],_,_]),sexoMae(Resposta, Id),!.
+probabilidadeSangueNome(Homem,_,_,_,Resposta, Id):-consultaPessoa(Homem,_), mulherNaoCadastrada(Resposta, Id),!.
+probabilidadeSangueNome(_,_,_,_,Resposta, Id):-homemNaoCadastrado(Resposta, Id).
+
 
 probabilidadeSangueTodos(Pai, Mae, Lista):-
 	consultaPessoa(Pai, [Gene1|_]), consultaPessoa(Mae, [Gene2|_]),
@@ -183,9 +188,13 @@ gerarGeneCalvice([Alelo1,Alelo2], [[Alelo1, X],[Alelo2, Y]]):-
 	aleatorio2(Num1), idCalvice(Num1, X),
 	aleatorio2(Num2), idCalvice(Num2, Y).
 
-probabilidadeCalvicieNome(Pai, Mae, Fenotipo, Percentual):-
-	consultaPessoa(Pai, [_,[G1,G2,_]|_]), consultaPessoa(Mae, [_,[G3,G4,_]|_]),
+probabilidadeCalvicieNome(Pai, Mae, Fenotipo, Percentual, _,_):-
+	consultaPessoa(Pai, [_,[G1,G2,masculino]|_]), consultaPessoa(Mae, [_,[G3,G4,feminino]|_]),
 	probabilidadeCalvice([G1,G2],[G3,G4], Fenotipo, Percentual).
+probabilidadeCalvicieNome(Homem,_,_,_,Resposta, Id):- consultaPessoa(Homem, [_,[_,_,feminino],_,_]), sexoPai(Resposta, Id),!.
+probabilidadeCalvicieNome(_,Mulher,_,_,Resposta, Id):- consultaPessoa(Mulher, [_,[_,_,masculino],_,_]),sexoMae(Resposta, Id),!.
+probabilidadeCalvicieNome(Homem,_,_,_,Resposta, Id):-consultaPessoa(Homem,_), mulherNaoCadastrada(Resposta, Id),!.
+probabilidadeCalvicieNome(_,_,_,_,Resposta, Id):-homemNaoCadastrado(Resposta, Id).
 
 probabilidadeCalvicieTodos(Pai, Mae, Lista):-
 	consultaPessoa(Pai, [_,[G1,G2,_]|_]), consultaPessoa(Mae, [_,[G3,G4,_]|_]),
@@ -214,9 +223,13 @@ gerarGeneOlho([Alelo1,Alelo2], [Alelo3,Alelo4],[[Alelo1, W],[Alelo3, X],[Alelo2,
 	aleatorio2(Num3), idOlhoB(Num3, Y),
 	aleatorio2(Num4), idOlhoG(Num4, Z).
 
-probabilidadeOlhoNome(Pai, Mae, Fenotipo, Percentual):-
-	consultaPessoa(Pai, [_,_,[O1,O2,O3,O4],_]), consultaPessoa(Mae, [_,_,[O5,O6,O7,O8],_]),
+probabilidadeOlhoNome(Pai, Mae, Fenotipo, Percentual, _,_):-
+	consultaPessoa(Pai, [_,[_,_,masculino],[O1,O2,O3,O4],_]), consultaPessoa(Mae, [_,[_,_,feminino],[O5,O6,O7,O8],_]),
 	probabilidadeOlho([O1,O2], [O3,O4], [O5,O6], [O7,O8], Fenotipo, Percentual).
+probabilidadeOlhoNome(Homem,_,_,_,Resposta, Id):- consultaPessoa(Homem, [_,[_,_,feminino],_,_]), sexoPai(Resposta,Id),!.
+probabilidadeOlhoNome(_,Mulher,_,_,Resposta, Id):- consultaPessoa(Mulher, [_,[_,_,masculino],_,_]),sexoMae(Resposta, Id),!.
+probabilidadeOlhoNome(Homem,_,_,_,Resposta, Id):-consultaPessoa(Homem,_), mulherNaoCadastrada(Resposta,Id),!.
+probabilidadeOlhoNome(_,_,_,_,Resposta, Id):-homemNaoCadastrado(Resposta, Id).
 
 probabilidadeOlhoTodos(Pai, Mae, Lista):-
 	consultaPessoa(Pai, [_,_,[O1,O2,O3,O4],_]), consultaPessoa(Mae, [_,_,[O5,O6,O7,O8],_]),
@@ -245,9 +258,13 @@ gerarGenePele([Alelo1,Alelo2], [Alelo3,Alelo4],[[Alelo1, W],[Alelo3, X],[Alelo2,
 	aleatorio2(Num3), idPeleA(Num3, Y),
 	aleatorio2(Num4), idPeleB(Num4, Z).
 
-probabilidadePeleNome(Pai, Mae, Fenotipo, Percentual):-
-	consultaPessoa(Pai, [_,_,_,[P1,P2,P3,P4]]), consultaPessoa(Mae, [_,_,_,[P5,P6,P7,P8]]),
+probabilidadePeleNome(Pai, Mae, Fenotipo, Percentual, _,_):-
+	consultaPessoa(Pai, [_,[_,_,masculino],_,[P1,P2,P3,P4]]), consultaPessoa(Mae, [_,[_,_,feminino],_,[P5,P6,P7,P8]]),
 	probabilidadePele([P1,P2],[P3,P4],[P5,P6],[P7,P8], Fenotipo, Percentual).
+probabilidadePeleNome(Homem,_,_,_,Resposta, Id):- consultaPessoa(Homem, [_,[_,_,feminino],_,_]), sexoPai(Resposta,Id),!.
+probabilidadePeleNome(_,Mulher,_,_,Resposta, Id):- consultaPessoa(Mulher, [_,[_,_,masculino],_,_]),sexoMae(Resposta,Id),!.
+probabilidadePeleNome(Homem,_,_,_,Resposta, Id):-consultaPessoa(Homem,_), mulherNaoCadastrada(Resposta, Id),!.
+probabilidadePeleNome(_,_,_,_,Resposta, Id):-homemNaoCadastrado(Resposta, Id).
 
 probabilidadePeleTodos(Pai, Mae, Lista):-
 	consultaPessoa(Pai, [_,_,_,[P1,P2,P3,P4]]), consultaPessoa(Mae, [_,_,_,[P5,P6,P7,P8]]),
@@ -284,11 +301,15 @@ formarListaUnica([[[S1,S2],[C1,C2],[O1,O2,O3,O4],[P1,P2,P3,P4]]|Individuos], Lis
 	formarListaUnica(Individuos, Lista),
 	concatenarLista([S1,S2,C1,C2,O1,O2,O3,O4,P1,P2,P3,P4], Lista, ListaUnica).
 
-arvoreGenealogica(Pessoa, Arvore, Nivel):-
+arvoreGenealogica(Pessoa, Arvore, Nivel, Resposta, Id):-
 	consultaPessoa(Pessoa,[[S1,S2],[C1,C2,_],[O1,O2,O3,O4],[P1,P2,P3,P4]]),
 	preArvore(Nivel, [[[S1,S2],[C1,C2],[O1,O2,O3,O4],[P1,P2,P3,P4]]], SubArvoreR),
 	reverse(SubArvoreR, SubArvore),concatenarLista([S1,S2,C1,C2,O1,O2,O3,O4,P1,P2,P3,P4], [Pessoa], Ultimo),
-	formarListaUnica(SubArvore, ListaUnica), concatenarLista(ListaUnica, Ultimo, Arvore).
+	formarListaUnica(SubArvore, ListaUnica), concatenarLista(ListaUnica, Ultimo, Arvore), arvoreResposta(Resposta, Id),!.
+arvoreGenealogica(_, _, _, Resposta, Id):- pessoaNaoCadastrada(Resposta, Id).
+
+arvoreResposta('Árvore Genealógica', 1).
+pessoaNaoCadastrada('Pessoa não cadastrada', 6).
 
 %Descendentes até um nivel dado
 
@@ -373,15 +394,67 @@ filhosCasais([[[Homem,_], [Mulher,_]]|Casais], [Filhos, Filhas]):-
 	concatenarLista(Filhos1, Filhos2, Filhos),
 	concatenarLista(Filhas1, Filhas2, Filhas).
 
-preDescendentes(Casais, [Descendentes], 1):- filhosCasais(Casais, Descendentes).
+preDescendentes(Casais, [Descendentes], 1):- filhosCasais(Casais, [Filhos, Filhas]),
+	concatenarLista(Filhos, Filhas, Descendentes).
 preDescendentes(Casal, [Casais|Descendentes], Nivel):-
 	filhosCasais(Casal,[Filhos,Filhas]),
 	formarCasais(Filhos, Filhas, Casais),
 	Resto is Nivel - 1,
 	preDescendentes(Casais, Descendentes, Resto).
 
-descendentes(Homem, Mulher, Descendentes, Nivel):-
-	preDescendentes([[[Homem,_], [Mulher,_]]], Descendentes, Nivel).
+converterCasais([[[[FOS1, FOS2], [FOC1, FOC2, masculino], [FOO1, FOO2, FOO3, FOO4], [FOP1, FOP2, FOP3, FOP4]],
+		  [[[PFOS1, PFOS2], [PFOC1, PFOC2, masculino], [PFOO1, PFOO2, PFOO3, PFOO4], [PFOP1, PFOP2, PFOP3, PFOP4]],
+		   [[MFOS1, MFOS2], [MFOC1, MFOC2, feminino], [MFOO1, MFOO2, MFOO3, MFOO4], [MFOP1, MFOP2, MFOP3, MFOP4]]]],
+		 [[[FAS1, FAS2], [FAC1, FAC2, feminino], [FAO1, FAO2, FAO3, FAO4], [FAP1, FAP2, FAP3, FAP4]],
+		  [[[PFAS1, PFAS2], [PFAC1, PFAC2, masculino], [PFAO1, PFAO2, PFAO3, PFAO4], [PFAP1, PFAP2, PFAP3, PFAP4]],
+		   [[MFAS1, MFAS2], [MFAC1, MFAC2, feminino], [MFAO1, MFAO2, MFAO3, MFAO4], [MFAP1, MFAP2, MFAP3, MFAP4]]]]],
+	[FOS1,FOS2,FOC1,FOC2,FOO1,FOO2,FOO3,FOO4,FOP1,FOP2,FOP3,FOP4,
+	 PFOS1,PFOS2,PFOC1,PFOC2,PFOO1,PFOO2,PFOO3,PFOO4,PFOP1,PFOP2,PFOP3,PFOP4,
+	MFOS1,MFOS2,MFOC1,MFOC2,MFOO1,MFOO2,MFOO3,MFOO4,MFOP1,MFOP2,MFOP3,MFOP4,
+	FAS1,FAS2,FAC1,FAC2,FAO1,FAO2,FAO3,FAO4,FAP1,FAP2,FAP3,FAP4,
+	PFAS1,PFAS2,PFAC1,PFAC2,PFAO1,PFAO2,PFAO3,PFAO4,PFAP1,PFAP2,PFAP3,PFAP4,
+	MFAS1,MFAS2,MFAC1,MFAC2,MFAO1,MFAO2,MFAO3,MFAO4,MFAP1,MFAP2,MFAP3,MFAP4]).
+
+convertePessoa([[[S1,S2],[C1,C2,_],[O1,O2,O3,O4],[P1,P2,P3,P4]],
+		[[[PS1,PS2],[PC1, PC2,_],[PO1,PO2,PO3,PO4],[PP1, PP2, PP3, PP4]],
+		 [[MS1,MS2],[MC1,MC2,_],[MO1,MO2,MO3,MO4],[MP1,MP2,MP3,MP4]]]],
+	      [S1,S2,C1,C2,O1,O2,O3,O4,P1,P2,P3,P4,
+	       PS1,PS2,PC1,PC2,PO1,PO2,PO3,PO4,PP1, PP2, PP3, PP4,
+	       MS1,MS2,MC1,MC2,MO1,MO2,MO3,MO4,MP1,MP2,MP3,MP4]).
+
+converterListaPessoas([Pessoa], PessoaC):-convertePessoa(Pessoa, PessoaC).
+converterListaPessoas([Head|Tail],Lista):-
+	convertePessoa(Head, Lista1), converterListaPessoas(Tail, Lista2),
+	concatenarLista(Lista1, Lista2, Lista).
+
+converterListaCasais([Casal], Lista):- converterCasais(Casal, Lista).
+converterListaCasais([Head|Tail], Lista):-
+	converterCasais(Head, Lista1), converterListaCasais(Tail, Lista2),
+	concatenarLista(Lista1, Lista2, Lista).
+
+converterDescendentes([Descendentes], [DescendentesC]):- converterListaPessoas(Descendentes, DescendentesC).
+converterDescendentes([Head1|Tail1],[Head|Tail]):-
+	converterListaCasais(Head1, Head), converterDescendentes(Tail1, Tail).
+
+descendentes(Homem, Mulher, Descendentes, Nivel,Resposta, Id):-
+	consultaPessoa(Homem, [[HS1,HS2],[HC1,HC2,masculino],[HO1,HO2,HO3,HO4],[HP1,HP2,HP3,HP4]]),
+	consultaPessoa(Mulher,[[MS1,MS2],[MC1,MC2,feminino],[MO1,MO2,MO3,MO4],[MP1,MP2,MP3,MP4]] ),
+	preDescendentes([[[[[HS1,HS2],[HC1,HC2,masculino],[HO1,HO2,HO3,HO4],[HP1,HP2,HP3,HP4]],_],
+        [[[MS1,MS2],[MC1,MC2,feminino],[MO1,MO2,MO3,MO4],[MP1,MP2,MP3,MP4]],_]]], DescendentesI, Nivel),
+	converterDescendentes(DescendentesI, DescendentesP),
+	concatenarLista([[Homem, Mulher, HS1,HS2,HC1,HC2,HO1,HO2,HO3,HO4,HP1,HP2,HP3,HP4,
+	MS1,MS2,MC1,MC2,MO1,MO2,MO3,MO4,MP1,MP2,MP3,MP4]],DescendentesP, Descendentes),
+	arvoreDescendencia(Resposta, Id),!.
+descendentes(Homem,_,_,_,Resposta, Id):- consultaPessoa(Homem, [_,[_,_,feminino],_,_]), sexoPai(Resposta, Id),!.
+descendentes(_,Mulher,_,_,Resposta, Id):- consultaPessoa(Mulher, [_,[_,_,masculino],_,_]),sexoMae(Resposta, Id),!.
+descendentes(Homem,_,_,_,Resposta, Id):-consultaPessoa(Homem,_), mulherNaoCadastrada(Resposta, Id),!.
+descendentes(_,_,_,_,Resposta, Id):-homemNaoCadastrado(Resposta, Id).
+
+arvoreDescendencia('Árvore de Descendência', 1).
+sexoPai('Pai deve ser do sexo masculino', 2).
+sexoMae('Mãe deve ser do sexo feminino', 3).
+mulherNaoCadastrada('Mãe não casdastrada', 4).
+homemNaoCadastrado('Pai não cadastrado', 5).
 
 
 %insercao e consulta
@@ -389,15 +462,20 @@ descendentes(Homem, Mulher, Descendentes, Nivel):-
 vazio('').
 vazio([]).
 
-inserirPessoa(pessoa(Nome,_)):-vazio(Nome),!,fail.
+/*inserirPessoa(pessoa(Nome,_)):-vazio(Nome),!,fail.
 inserirPessoa(pessoa(_,[Sangue|_])):-vazio(Sangue),!,fail.
 inserirPessoa(pessoa(_,[_,Calvicie|_])):-vazio(Calvicie),!,fail.
 inserirPessoa(pessoa(_,[_,_,Olho,_])):-vazio(Olho),!,fail.
-inserirPessoa(pessoa(_,[_,_,_,Pele])):-vazio(Pele),!,fail.
-inserirPessoa(pessoa(Nome, _)):- absolute_file_name('pessoas.txt',Destino),
-consult(Destino), pessoa(Nome, _) , write('Nome já cadastrado!'), !, fail.
-inserirPessoa(Pessoa):-absolute_file_name('pessoas.txt',Destino),
-append(Destino),writeq(Pessoa),write('.'), write('\n'), told.
+inserirPessoa(pessoa(_,[_,_,_,Pele])):-vazio(Pele),!,fail.*/
+
+inserirPessoa(pessoa(Nome, _), Resposta):- absolute_file_name('pessoas.txt',Destino),
+consult(Destino), pessoa(Nome, _) , nomeInvalido(Resposta),!.
+inserirPessoa(Pessoa, Resposta):-absolute_file_name('pessoas.txt',Destino),
+append(Destino),writeq(Pessoa),write('.'), write('\n'), told, cadastrado(Resposta).
+
+cadastrado('Cadastrado com sucesso').
+nomeInvalido('Nome já cadastrado').
+
 consultaPessoa(Nome, Genes):-absolute_file_name('pessoas.txt',Destino),
 consult(Destino), pessoa(Nome, Genes).
 
@@ -412,17 +490,36 @@ genePossivel([Alelo1,_],[_,Alelo2],[Alelo2,Alelo1]).
 genePossivel([_,Alelo1],[Alelo2,_],[Alelo2,Alelo1]).
 genePossivel([_,Alelo1],[_,Alelo2],[Alelo2,Alelo1]).
 
-compatibilidade(Pai, Mae, Filho):-
-consultaPessoa(Pai,[SangueP, [C1P,C2P,_],[O1P,O2P,O3P,O4P],[P1P,P2P,P3P,P4P]]),
-consultaPessoa(Mae,[SangueM, [C1M,C2M,_],[O1M,O2M,O3M,O4M],[P1M,P2M,P3M,P4M]]),
+compatibilidade(Pai, Mae, Filho, Resposta, Id):-
+consultaPessoa(Pai,[SangueP, [C1P,C2P,masculino],[O1P,O2P,O3P,O4P],[P1P,P2P,P3P,P4P]]),
+consultaPessoa(Mae,[SangueM, [C1M,C2M,feminino],[O1M,O2M,O3M,O4M],[P1M,P2M,P3M,P4M]]),
 consultaPessoa(Filho,[SangueF, [C1F,C2F,_],[O1F,O2F,O3F,O4F],[P1F,P2F,P3F,P4F]]),
 genePossivel(SangueP, SangueM, SangueF),genePossivel([C1P,C2P], [C1M,C2M], [C1F,C2F]),
 genePossivel([O1P,O2P],[O1M,O2M],[O1F,O2F]),genePossivel([O3P,O4P],[O3M,O4M],[O3F,O4F]),
-genePossivel([P1P,P2P],[P1M,P2M],[P1F,P2F]),genePossivel([P3P,P4P],[P3M,P4M],[P3F,P4F]).
+genePossivel([P1P,P2P],[P1M,P2M],[P1F,P2F]),genePossivel([P3P,P4P],[P3M,P4M],[P3F,P4F]),compatibilidadeConfirmada(Resposta, Id),!.
+compatibilidade(Homem,_,_,Resposta, Id):- consultaPessoa(Homem, [_,[_,_,feminino],_,_]), sexoPai(Resposta, Id),!.
+compatibilidade(_,Mulher,_,Resposta, Id):- consultaPessoa(Mulher, [_,[_,_,masculino],_,_]),sexoMae(Resposta, Id),!.
+compatibilidade(Homem,Mulher,Pessoa,Resposta, Id):-consultaPessoa(Mulher,_), consultaPessoa(Pessoa,_),consultaPessoa(Homem,_), incompativel(Resposta, Id),!.
+compatibilidade(Homem,_,Pessoa,Resposta, Id):-consultaPessoa(Homem,_), consultaPessoa(Pessoa,_),mulherNaoCadastrada(Resposta, Id),!.
+compatibilidade(_,Mulher,Pessoa,Resposta, Id):-consultaPessoa(Mulher,_), consultaPessoa(Pessoa,_),homemNaoCadastrado(Resposta, Id),!.
+compatibilidade(Homem,Mulher,_,Resposta, Id):-consultaPessoa(Mulher,_), consultaPessoa(Homem,_),pessoaNaoCadastrada(Resposta, Id),!.
+compatibilidade(_,Mulher,_,Resposta, Id):-consultaPessoa(Mulher,_), paiFilhoInvalidos(Resposta, Id),!.
+compatibilidade(Homem,_,_,Resposta, Id):-consultaPessoa(Homem,_), maeFilhoInvalidos(Resposta, Id),!.
+compatibilidade(_,_,Pessoa,Resposta, Id):-consultaPessoa(Pessoa,_), paiMaeInvalidos(Resposta, Id).
+compatibilidade(_,_,_,Resposta, Id):-todosInvalidos(Resposta, Id).
+
+
+compatibilidadeConfirmada('Compatibilidade confirmada', 1).
+paiMaeInvalidos('Pai e mãe não cadastrados', 8).
+paiFilhoInvalidos('Pai e filho não cadastrados', 9).
+maeFilhoInvalidos('Mãe e filho não cadastrados', 10).
+incompativel('Incompatível', 7).
+todosInvalidos('Pai, mãe e filho não cadastrados', 11).
+
 
 %testes
-teste([1,[2,[3]]]).
-
+%teste([1,[2,[3]]]).
+teste([[q,w,e,r,t],[a,s,d],[q,e,e,r,t,i,v,v,c,x,d,y,g]]).
 
 
 

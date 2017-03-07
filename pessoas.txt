@@ -1,14 +1,31 @@
 pessoa('wallace santana', [['IA','IA'],['C','c',masculino],['BM','BM','GA','GV'],['a','a','B','B']]).
-
-pessoa('Wallace',[['IA',ii],[c,c,masculino],['BA','BA','GV','GA'],['A','A','B','B']]).
+pessoa(tatiane,[['IA',ii],['C','C',feminino],['BA','BA','GV','GV'],['A','A','B','B']]).
+pessoa('wallace',[['IA',ii],[c,c,masculino],['BA','BA','GV','GA'],['A','A','B','B']]).
 pessoa('Ertane',[['IA',ii],[c,c,masculino],['BA','BA','GV','GV'],['A','A','B',b]]).
 pessoa('Tera',[['IB','IB'],[c,c,masculino],['BA','BA','GV','GV'],['A','A',b,b]]).
-
 pessoa('Walir',[['IA','IA'],['C','C',masculino],['BM','BM','GV','GA'],['A','A','B',b]]).
 pessoa('Salem',[[ii,ii],[c,c,masculino],['BA','BA','GV','GA'],['A','A','B','B']]).
 pessoa('Moritaka Inuduka',[['IA','IA'],[c,c,masculino],['BM','BM','GV','GA'],['A',a,b,b]]).
 pessoa(daniel,[['IB',ii],['C',c,masculino],['BA','BA','GV','GV'],['A',a,'B',b]]).
-pessoa(camila,[['IA','IB'],['c','c',feminino],['BM','BM','GA','GA'],['A',a,b,b]]).pessoa(mae,[['IA','IA'],[c,c,masculino],['BM','BM','GV','GV'],['A','A',b,b]]).
+pessoa(camila,[['IA','IB'],['c','c',feminino],['BM','BM','GA','GA'],['A',a,b,b]]).
+pessoa(mae,[['IA','IA'],[c,c,masculino],['BM','BM','GV','GV'],['A','A',b,b]]).
 pessoa(filho,[['IA','IA'],[c,c,masculino],['BM','BM','GV','GV'],['A','A',b,b]]).
 pessoa(pai,[['IA','IA'],[c,c,masculino],['BM','BM','GV','GV'],['A','A',b,b]]).
 pessoa(teste,[['IB','IB'],[c,c,masculino],['BM','BM','GA','GA'],[a,a,'B',b]]).
+pessoa(joao,[['IA','IA'],[c,c,masculino],['BA','BA','GV','GV'],['A','A','B',b]]).
+pessoa(jose,[['IA','IA'],['C',c,masculino],['BM','BM','GV','GV'],['A','A','B',b]]).
+pessoa(jean,[['IA','IA'],['C','C',masculino],['BA','BA','GV','GV'],['A','A','B',b]]).
+pessoa(elieser,[['IA','IA'],['C','C',masculino],['BA','BA','GV','GA'],['A','A','B',b]]).
+pessoa(jonas,[['IA','IA'],['C','C',masculino],['BM','BM','GV','GV'],['A','A','B',b]]).
+pessoa(bruno,[['IA','IA'],['C','C',masculino],['BA','BA','GV','GV'],['A','A','B',b]]).
+pessoa(aline,[['IA','IA'],['C','C',masculino],['BA','BA','GV','GV'],['A','A','B',b]]).
+pessoa(dayane,[['IB','IB'],[c,c,masculino],['BA','BA','GV','GV'],['A',a,b,b]]).
+pessoa(cristiane,[['IA','IA'],['C',c,feminino],['BA','BA','GV','GV'],['A','A','B',b]]).
+pessoa(carol,[['IB','IB'],['C','C',feminino],['BA','BA','GV','GV'],['A','A','B',b]]).
+pessoa(e,[['IA','IA'],['C','C',feminino],['BA','BA','GV','GV'],['A',a,b,b]]).
+pessoa(cruuz,[['IB','IB'],['C','C',masculino],['BM','BM','GV','GV'],['A','A','B',b]]).
+pessoa(guga,[['IA','IA'],['C','C',feminino],['BA','BA','GV','GV'],['A','A','B',b]]).
+pessoa(jesse,[['IA','IA'],[c,c,masculino],['BA','BA','GV','GV'],['A','A','B',b]]).
+pessoa(juan,[['IA','IA'],['C','C',feminino],['BA','BA','GV','GV'],['A','A','B',b]]).
+pessoa(richely,[['IA','IA'],['C','C',masculino],['BM','BM','GV','GV'],['A','A',b,b]]).
+pessoa(eron,[['IB','IB'],['C','C',masculino],['BA','BA','GV','GV'],['A','A','B',b]]).

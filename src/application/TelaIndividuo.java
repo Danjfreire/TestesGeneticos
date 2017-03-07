@@ -34,6 +34,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class TelaIndividuo extends JFrame {
 
@@ -64,6 +66,7 @@ public class TelaIndividuo extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaIndividuo() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(TelaIndividuo.class.getResource("/imagens/dna-helix-16.png")));
 		setResizable(false);
 		setTitle("Novo Indiv\u00EDduo");
 		setBackground(Color.WHITE);
@@ -450,12 +453,38 @@ public class TelaIndividuo extends JFrame {
 		contentPane.add(btnCadastrar);
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//if(textNome.getText().isEmpty() || textField.getText().isEmpty() || textField_1.getText().isEmpty() || textField_2.getText().isEmpty() || textField_3.getText().isEmpty())
-					//JOptionPane.showMessageDialog(null, "Preencha todos os campos");
-				//else{
-				inserirPessoaProlog();
-				dispose();
-				//}
+				if(textNome.getText().isEmpty() || textField.getText().isEmpty() || textField_1.getText().isEmpty() || textField_2.getText().isEmpty() || textField_3.getText().isEmpty())
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+				else{
+					String genes = "[" + "["+textField.getText()+"]" + "," + "["+textField_1.getText() +"]"+ "," +"["+ textField_2.getText()+"]" + "," +
+							"["+ textField_3.getText()+ "]"+ "]";
+							String proposicao = "pessoa('" + textNome.getText() + "'," + genes + ")";
+							String inserirPessoa = "inserirPessoa(" + proposicao +", Resposta)";
+							System.out.println(inserirPessoa);		
+							Query q1 = new Query(inserirPessoa);
+						
+							Term r = q1.oneSolution().get("Resposta");
+							if(r.toString().equals("'Cadastrado com sucesso'")){
+								textField.setEditable(true);
+								textField_1.setEditable(true);
+								textField_2.setEditable(true);
+								textField_3.setEditable(true);
+								textNome.setText("");
+								textField.setText("");
+								textField_1.setText("");
+								textField_2.setText("");
+								textField_3.setText("");
+								textField.setEditable(false);
+								textField_1.setEditable(false);
+								textField_2.setEditable(false);
+								textField_3.setEditable(false);
+								JOptionPane.showMessageDialog(null, r.toString());
+							}
+							else if(r.toString().equals("'Nome já cadastrado'")){
+								JOptionPane.showMessageDialog(null, r.toString());
+								textNome.setText("");
+							}
+				}
 			}
 		});
 		
@@ -473,6 +502,15 @@ public class TelaIndividuo extends JFrame {
 		panel.setLayout(null);
 		
 		textNome = new JTextField();
+		textNome.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				if(textNome.getText().length() == 22){
+					getToolkit().beep();
+					arg0.consume();
+				}
+			}
+		});
 		textNome.setBounds(21, 31, 383, 20);
 		panel.add(textNome);
 		textNome.setColumns(10);
@@ -524,16 +562,5 @@ public class TelaIndividuo extends JFrame {
 		panel_1.add(textField_3);
 		textField_3.setColumns(10);
 		
-	}
-	
-	private void inserirPessoaProlog(){
-		String genes = "[" + "["+textField.getText()+"]" + "," + "["+textField_1.getText() +"]"+ "," +"["+ textField_2.getText()+"]" + "," +
-		"["+ textField_3.getText()+ "]"+ "]";
-		String proposicao = "pessoa('" + textNome.getText() + "'," + genes + ")";
-		String inserirPessoa = "inserirPessoa(" + proposicao +")";
-		System.out.println(inserirPessoa);		
-		Query q1 = new Query(inserirPessoa);
-		JOptionPane.showMessageDialog(null, String.valueOf(q1.hasSolution()));
-		//System.out.println( "consult " + (q1.hasSolution() ? "succeeded" : "failed"));
 	}
 }
