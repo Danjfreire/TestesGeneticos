@@ -262,7 +262,7 @@ public class TelaPrincipal extends JFrame {
 		panel_4.setLayout(null);
 		
 		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}));
+		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6"}));
 		comboBox_2.setBounds(10, 34, 170, 20);
 		panel_4.add(comboBox_2);
 		btnExecutar.addActionListener(new ActionListener(){
