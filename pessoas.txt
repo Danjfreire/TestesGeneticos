@@ -29,3 +29,5 @@ pessoa(jesse,[['IA','IA'],[c,c,masculino],['BA','BA','GV','GV'],['A','A','B',b]]
 pessoa(juan,[['IA','IA'],['C','C',feminino],['BA','BA','GV','GV'],['A','A','B',b]]).
 pessoa(richely,[['IA','IA'],['C','C',masculino],['BM','BM','GV','GV'],['A','A',b,b]]).
 pessoa(eron,[['IB','IB'],['C','C',masculino],['BA','BA','GV','GV'],['A','A','B',b]]).
+pessoa(teste1,[['IA','IA'],[c,c,masculino],['BA','BA','GV','GV'],['A','A',b,b]]).
+pessoa(teste2,[['IB',ii],['C',c,feminino],['BM','BM','GV','GV'],['A',a,b,b]]).
