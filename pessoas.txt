@@ -8,7 +8,7 @@ pessoa('Salem',[[ii,ii],[c,c,masculino],['BA','BA','GV','GA'],['A','A','B','B']]
 pessoa('Moritaka Inuduka',[['IA','IA'],[c,c,masculino],['BM','BM','GV','GA'],['A',a,b,b]]).
 pessoa(daniel,[['IB',ii],['C',c,masculino],['BA','BA','GV','GV'],['A',a,'B',b]]).
 pessoa(camila,[['IA','IB'],['c','c',feminino],['BM','BM','GA','GA'],['A',a,b,b]]).
-pessoa(mae,[['IA','IA'],[c,c,masculino],['BM','BM','GV','GV'],['A','A',b,b]]).
+pessoa(mae,[['IA','IA'],[c,c,feminino],['BM','BM','GV','GV'],['A','A',b,b]]).
 pessoa(filho,[['IA','IA'],[c,c,masculino],['BM','BM','GV','GV'],['A','A',b,b]]).
 pessoa(pai,[['IA','IA'],[c,c,masculino],['BM','BM','GV','GV'],['A','A',b,b]]).
 pessoa(teste,[['IB','IB'],[c,c,masculino],['BM','BM','GA','GA'],[a,a,'B',b]]).
@@ -29,3 +29,6 @@ pessoa(jesse,[['IA','IA'],[c,c,masculino],['BA','BA','GV','GV'],['A','A','B',b]]
 pessoa(juan,[['IA','IA'],['C','C',feminino],['BA','BA','GV','GV'],['A','A','B',b]]).
 pessoa(richely,[['IA','IA'],['C','C',masculino],['BM','BM','GV','GV'],['A','A',b,b]]).
 pessoa(eron,[['IB','IB'],['C','C',masculino],['BA','BA','GV','GV'],['A','A','B',b]]).
+pessoa('Faye Valentine',[['IA','IA'],[c,c,feminino],['BA','BA','GA','GA'],[a,a,b,b]]).
+pessoa('Rodrigo',[['IA','IA'],[c,c,masculino],['BM','BA','GA','GA'],[a,a,b,b]]).
+pessoa('SAAAAAAAAAAAAAAAAAAAAA',[['IA','IA'],['C','C',masculino],['BM','BM','GV','GV'],['A','A','B','B']]).
