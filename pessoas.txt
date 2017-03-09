@@ -31,3 +31,9 @@ pessoa(richely,[['IA','IA'],['C','C',masculino],['BM','BM','GV','GV'],['A','A',b
 pessoa(eron,[['IB','IB'],['C','C',masculino],['BA','BA','GV','GV'],['A','A','B',b]]).
 pessoa(teste1,[['IA','IA'],[c,c,masculino],['BA','BA','GV','GV'],['A','A',b,b]]).
 pessoa(teste2,[['IB',ii],['C',c,feminino],['BM','BM','GV','GV'],['A',a,b,b]]).
+pessoa(pedrinho,[['IA',ii],[c,c,masculino],['BA','BA','GA','GA'],['A','A',b,b]]).
+
+pessoa(aninha,[['IA','IB'],['C',c,feminino],['BM','BM','GV','GV'],['A',a,b,b]]).
+pessoa(azul1,[['IA','IA'],['C','C',masculino],['BA','BA','GA','GA'],['A','A','B','B']]).
+pessoa(azul2,[['IB','IB'],[c,c,masculino],['BA','BA','GA','GA'],['A','A',b,b]]).
+pessoa(azul3,[['IA','IA'],['C',c,feminino],['BA','BA','GA','GA'],['A','A','B',b]]).

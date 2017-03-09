@@ -11,7 +11,7 @@ import org.jpl7.Util;
 public class Arvore {
 	public StringBuffer gerarArvoreProlog(JTextField tfPessoa, String nivel){
 		String consulta = "arvoreGenealogica('"+ tfPessoa.getText() +"', Arvore,"+ nivel +",Resposta, Id)";
-		System.out.println(consulta);
+		//System.out.println(consulta);
 		StringBuffer resposta = new StringBuffer();
 		//Realizar consulta 
 		Query q = new Query(consulta);

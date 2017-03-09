@@ -460,7 +460,7 @@ public class TelaIndividuo extends JFrame {
 							"["+ textField_3.getText()+ "]"+ "]";
 							String proposicao = "pessoa('" + textNome.getText() + "'," + genes + ")";
 							String inserirPessoa = "inserirPessoa(" + proposicao +", Resposta)";
-							System.out.println(inserirPessoa);		
+							//System.out.println(inserirPessoa);		
 							Query q1 = new Query(inserirPessoa);
 						
 							Term r = q1.oneSolution().get("Resposta");
