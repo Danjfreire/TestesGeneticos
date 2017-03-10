@@ -37,3 +37,4 @@ pessoa(aninha,[['IA','IB'],['C',c,feminino],['BM','BM','GV','GV'],['A',a,b,b]]).
 pessoa(azul1,[['IA','IA'],['C','C',masculino],['BA','BA','GA','GA'],['A','A','B','B']]).
 pessoa(azul2,[['IB','IB'],[c,c,masculino],['BA','BA','GA','GA'],['A','A',b,b]]).
 pessoa(azul3,[['IA','IA'],['C',c,feminino],['BA','BA','GA','GA'],['A','A','B',b]]).
+pessoa('Maria',[['IA','IA'],[c,c,feminino],['BM','BA','GV','GA'],['A','A','B',b]]).
