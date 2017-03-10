@@ -1,9 +1,9 @@
 
 feliz(yolanda).
 escutaMusica(mia).
-escutaMusica(yolanda):-feliz(yolanda).
-guitarraImaginaria(mia):-escutaMusica(mia).
-guitarraImaginaria(yolanda):-escutaMusica(yolanda).
+escutaMusica(yolanda):-happy(yolanda).
+guitarraImaginaria(mia):-listens2Music(mia).
+guitarraImaginaria(yolanda):-listens2Music(yolanda).
 loves(vincent,mia).
 loves(marsellus,mia).
 loves(pumpkin,honey_bunny).
